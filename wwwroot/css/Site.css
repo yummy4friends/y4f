@@ -1,0 +1,18 @@
+﻿#content {
+    background-color: #C7FFD5;
+    padding: 10%;
+}
+
+
+img {
+    height: 50%;
+    max-width: 50%;
+    text-align: center;
+}
+
+
+button {
+    text-align: center;
+    position: center;
+}
+
