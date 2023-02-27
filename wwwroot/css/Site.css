@@ -1,11 +1,20 @@
-﻿#content {
-    background-color: #C7FFD5;
+﻿#center {
+    
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+
+
+#content {
+    background-color: #C7FFD1;
     padding: 10%;
 }
 
 
 img {
-    height: 50%;
+    height: auto;
     max-width: 50%;
     text-align: center;
 }
