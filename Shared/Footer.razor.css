@@ -1,5 +1,5 @@
 ﻿a {
-    color: #000000;
+    color: grey;
     text-decoration: none;
 }
 
@@ -9,5 +9,5 @@ a:hover, a:focus {
 }
 
 h6 {
-    color: red;
+    color: grey;
 }
