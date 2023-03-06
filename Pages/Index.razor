@@ -1,9 +1,16 @@
 ﻿@page "/"
+@layout Startseite
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Yummy4Friends</PageTitle>
 
-<h1>Hello, world!</h1>
 
-Welcome to your new app.
+<body style='--blazor-load-percentage: 100%; --blazor-load-percentage-text: "100%";'>
+    <div class="container col-lg-6 col-md-9 col-sm-12 d-flex flex-column " id="content">
+        <center><h1>Herzlich Willkommen!</h1></center>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+        <img src="assets/Logo_new.png" class="img" title="logo image">
+            
+        <button href="Speisekarte.razor" type="button" class=" btn btn-light justify-content-center">Zur Speisekarte</button>
+    </div>
+</body>
+
