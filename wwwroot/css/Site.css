@@ -1,0 +1,25 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    background-color: #C7FFD1;
+}
+
+#content {
+    background-color: #C7FFD1;
+    padding: 5%;
+    margin-top: 1%;
+    border-radius: 10px;
+    
+}
+
+.img {
+    height: auto;
+    max-width: 100%;
+    margin: 10%;
+}
+
+button {
+    box-shadow: 5px 5px #d3d3d3;
+}
