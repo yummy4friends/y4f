@@ -20,6 +20,10 @@ html, body {
     margin: 10%;
 }
 
-button {
+input {
     box-shadow: 5px 5px #d3d3d3;
+}
+
+form {
+    text-align: center;
 }
