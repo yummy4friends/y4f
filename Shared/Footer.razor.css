@@ -11,3 +11,15 @@ a:hover, a:focus {
 h6 {
     color: grey;
 }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+}
+
+section {
+    border-color: black;
+    
+}
