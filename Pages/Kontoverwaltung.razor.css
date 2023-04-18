@@ -22,15 +22,6 @@ button {
         display: block;
     }
 
-    button::after {
-        content: 'Konto aktivieren';
-        display: block;
-    }
-
-    button:focus::after,
-    button:active::after {
-        content: 'Konto deaktivieren';
-        display: block;
-    }
+    
 
 
