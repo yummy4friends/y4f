@@ -1,8 +1,4 @@
-﻿body {
-    padding: 0px;
-    margin: 0px;
-
-}
+﻿
 
 img {
     width: 15%;
@@ -10,5 +6,31 @@ img {
     padding: 0px;
     margin: 0px;
 }
+
+button {
+    background-color: #89f9a5;
+}
+
+    button:after {
+        content: 'Konto deaktivieren';
+        display: block;
+    }
+
+    button:focus:after,
+    button:active:after {
+        content: 'Konto aktivieren';
+        display: block;
+    }
+
+    button::after {
+        content: 'Konto aktivieren';
+        display: block;
+    }
+
+    button:focus::after,
+    button:active::after {
+        content: 'Konto deaktivieren';
+        display: block;
+    }
 
 
