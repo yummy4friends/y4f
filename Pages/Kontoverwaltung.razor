@@ -4,13 +4,23 @@
 
 
 
-<div class="container">
+<div class="container mt-auto">
     <h4>AccountID: #1234</h4>
     <h4>Ihr QR-Code: </h4><img src="assets/K-QR.png" class="img" title="logo image">
-    <br><br><br>
-
     <p>Ihr Konto wird 30 Tage nach der Deaktivierung unwiderruflich gelöscht.</p>
-
-    <button type="button" class="btn"></button>
-    <br><br><br>
+    <button class="btn" type="button" onclick="@ChangeButton" id="button1">@button1</button>
 </div>
+
+<br><br>
+
+@code {
+    bool changeButtonBool { get; set; } = true;
+
+    string button1 => changeButtonBool ? "Konto deaktivieren" : "Konto aktivieren";
+
+    void ChangeButton()
+    {
+        //TODO Datenbankaktualisierung
+        changeButtonBool = !changeButtonBool;
+    }
+}

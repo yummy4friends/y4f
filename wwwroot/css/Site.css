@@ -4,9 +4,10 @@ html, body {
     margin: 0px;
     padding: 0px;
     background-color: #C7FFD1;
-    display:flex;
-    flex-direction: column;
-    min-height: 100vh;
+
+}
+#page {
+    min-height: 100%;
 }
 
 #content {
@@ -14,7 +15,6 @@ html, body {
     padding: 5%;
     margin-top: 1%;
     border-radius: 10px;
-    
 }
 
 .img {
@@ -27,11 +27,4 @@ html, body {
 form {
     text-align: center;
 
-}
-
-footer {
-    margin-top: auto;
-    position: absolute;
-    width: 100%;
-    bottom: 0px;
 }

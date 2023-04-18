@@ -12,12 +12,15 @@ h6 {
     color: grey;
 }
 
-.footer {
-    
-    background-color: #89f9a5;
-}
 
-    section {
-    border-color: black;
-    
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #89f9a5;
+    color: white;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }

@@ -1,8 +1,8 @@
 ﻿
 
 img {
-    width: 15%;
-    height: auto;
+    width: 150px;
+    height: 150px;
     padding: 0px;
     margin: 0px;
 }
@@ -11,16 +11,7 @@ button {
     background-color: #89f9a5;
 }
 
-    button:after {
-        content: 'Konto deaktivieren';
-        display: block;
-    }
 
-    button:focus:after,
-    button:active:after {
-        content: 'Konto aktivieren';
-        display: block;
-    }
 
     
 
