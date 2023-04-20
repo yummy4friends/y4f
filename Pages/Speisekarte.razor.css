@@ -26,3 +26,8 @@ td {
 .lowest {
     border: 0px;
 }
+
+.tablecolumn {
+    margin-left: 3%;
+    margin-right: 3%;
+}
