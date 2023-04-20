@@ -1,0 +1,129 @@
+﻿@page "/shopping_cart"
+
+<PageTitle>Warenkorb</PageTitle>
+
+<h1>Warenkorb</h1>
+<div class="container">
+    <div class="row">
+    </div>
+
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-lg-6">
+            @*Tabelle Ihre Bestellung*@
+            <div class="tbl-container">
+                <table class="table bdr">
+                    <thead class="bg_green">
+                        <tr>
+                            <td>Ihre Bestellung</td>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg_lightgreen">
+                        <tr>
+                            <td class="br" style="padding-top:20px; padding-bottom:0px; border-bottom-width: 0px;">
+                                1 Nudel mit Hühnerfleisch (groß)
+                                <div style="font-size:0.7rem;padding-left:15px;">mit Knoblauchsoße</div>
+                            </td>
+                            <td class="d-flex justify-content-center align-items-center" style="padding-top:20px; padding-bottom:0px;">9,10€</td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;">1 Coca Cola</td>
+                            <td class="d-flex justify-content-center align-items-center" style="padding-top:0px;">2,50€</td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px;"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg_lightgreen">
+                        <tr style="border-top:solid 1px black;">
+                            <th class="" style="text-align:right;">Summe</th>
+                            <td class="d-flex justify-content-center align-items-center">11,60€</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            <div class="h-100">
+                @*Essen Abholen?*@
+                <div class="row h-25 w-100">
+                    <div class="col">
+                        <div class="d-flex flex-column align-items-center  ">
+                            <div class="tbl-container bdr  w-100">
+                                <!-- <== overflow: hidden applied to parent -->
+                                <table class="table bdr" cellspacing="0" cellpadding="0">
+                                    <thead class="bg_green">
+                                        <tr>
+                                            <td class="d-flex justify-content-center align-items-center" style="border-bottom:0px;">
+                                                Wann wollen Sie Ihr Essen abholen?
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg_lightgreen">
+                                        <tr>
+                                            <td class="d-flex justify-content-center align-items-center" style="padding-top:0px;">
+                                                <div style="margin:20px;">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <input type="number" style="width:80px" min="10" max="20" />
+                                                        <input type="number" style="width:80px" min="0" max="59" />
+                                                        &nbsp;
+                                                        Uhr
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*Buttons*@
+                <div class="row h-75 w-100">
+                    <div class="col mt-auto">
+                        <div class="d-flex flex-column align-items-center  ">
+                            <button class="btn_back w-75">Zurück</button>
+                            <button class="btn_forward w-75">Weiter</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
