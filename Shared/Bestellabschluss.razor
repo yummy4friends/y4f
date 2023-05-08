@@ -1,0 +1,37 @@
+﻿@page "/Bestellabschluss"
+@layout MainLayout
+
+<body>
+    <div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+        <p>Sie haben derzeit <b>1 Yummy-Punkt(e)</b></p>
+        <p class="text">Bei einem Mindestbestellwert von 8€ erhalten Sie ein Yummy-Punkt. 
+            Ab der 10ten Bestellung gibt es einen Rabatt zu Ihrer nächsten Bestellung.</p>
+        
+        <div class="img" >
+            @for(int i = 0; i < 10; i++)
+            {
+                <img src="assets/White-Circle.png ">
+            }
+            <br>
+            </div>
+        
+            <p class="text">Achtung: Bitte beachten Sie, dass keine online Bezahlung zur Verfügung steht. 
+                Diese dient nur zur Vorbestellung und muss selbst abgeholt werden.</p>
+        
+        <div class="button">
+            <form id="button1" action="Warenkorb">
+                <input type="submit" value="Zurück" class="btn">
+            </form>
+
+            <form id="button2" action="Confirm">
+                <input type="submit" value="Vorbestellen" class="btn">
+            </form>
+        </div>
+
+    </div>
+
+</body>
+@code {
+
+    
+}
