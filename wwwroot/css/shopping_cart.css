@@ -1,0 +1,41 @@
+﻿.tbl-container {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.bg_green {
+    background-color: #89F9A5;
+}
+
+.bdr {
+    border-radius: 17px;
+    overflow: hidden;
+    border-color: #C7FFD5;
+}
+
+.bg_lightgreen {
+    background-color: #C7FFD5;
+}
+
+.br {
+    border-right: solid 1px black;
+    border-collapse: collapse;
+    border-bottom-width: 0;
+}
+
+.btn_back {
+    background-color: #F9BE89;
+    /*width: 60%;*/
+    margin-bottom: 13px;
+    border-radius: 30px;
+    height: 50px;
+    border: 0px;
+}
+
+.btn_forward {
+    background-color: #89F9A5;
+    /*width: 60%;*/
+    border-radius: 30px;
+    height: 50px;
+    border: 0px;
+}
