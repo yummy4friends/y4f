@@ -1,0 +1,33 @@
+﻿.table {
+    text-align: center;
+    border-radius: 30px;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: #2A6496;
+    text-decoration: underline;
+}
+
+th {
+    background-color: #89f9a5;
+    border: 0px;
+}
+
+td {
+    border-color: black;
+    padding: 30px 0;
+}
+
+.lowest {
+    border: 0px;
+}
+
+.tablecolumn {
+    margin-left: 3%;
+    margin-right: 3%;
+}
