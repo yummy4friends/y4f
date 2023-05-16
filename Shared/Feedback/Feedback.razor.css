@@ -1,0 +1,41 @@
+﻿body, html {
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 15px;
+}
+
+p {
+    text-align:center;
+}
+
+img {
+    width: 20%;
+    height: auto;
+    padding: 5px;
+}
+
+.text {
+    color: grey;
+    font-size: 13px;
+}
+
+.button {
+    padding-left: 25%;
+    padding-right: 25%;
+    text-align: center;
+}
+
+#button1 {
+    background-color: #F9BE89;
+    padding-left: 25%;
+    padding-right: 25%;
+    display: inline-block;
+    border-radius: 50px;
+}
+h4 {
+    text-align: center;
+}
+
+
+
+
