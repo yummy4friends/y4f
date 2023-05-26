@@ -1,124 +1,100 @@
 ﻿@page "/Speisekarte"
 
+@inject HttpClient Http
+
+<h1>Speisekarte</h1>
 <div class="row justify-content-center">
-    <div class="col-lg-2 col-md-4 col-sm-12 tablecolumn">
-        <table class="table table-light overflow-hidden">
-            <thead>
-                <tr>
-                    <th scope="col">Chinesisch</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="">Nudeln</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">Reis</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><a href="">Nachspeisen</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-12 tablecolumn">
-        <table class="table table-light overflow-hidden">
-            <thead>
-                <tr>
-                    <th scope="col">Japanisch</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="">Sushi & Maki</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">Bento</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><a href="">Nachspeisen</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-            </tbody>
-            </table>
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-12 tablecolumn">
-        <table class="table table-light overflow-hidden">
-            <thead>
-                <tr>
-                    <th scope="col">Getränke</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="">Alkoholfrei</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><a href="">Alkoholisch</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-lg-2 col-md-4 col-sm-12 tablecolumn">
-        <table class="table table-light overflow-hidden">
-            <thead>
-                <tr>
-                    <th scope="col">Sonstiges</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="">Schnitzel</a></td>
-                </tr>
-                <tr>
-                    <td><a href="">Pommes</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><a href="">Bowl</a></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-                <tr>
-                    <td class="lowest"><br></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+	@foreach (var item in menuitemueberkategories)
+	{
+		<div class="col-lg-2 col-md-4 col-sm-12 tablecolumn">
+			<table class="table table-light overflow-hidden">
+				<thead>
+					<tr>
+						<th scope="col">@item.Bezeichnung</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item2 in menuitemkategories)
+					{
+						if (item.IdmenuItemUeberkategorie == item2.MenuItemUeberkategorieIdmenuItemUeberkategorie)
+						{
+							if (@item.Bezeichnung == "Chinesisch")
+							{
+								<tr>
+									<td><a href="/SpeisekarteChinesich">@item2.Bezeichnung</a></td>
+								</tr>
+							}
+							else if (@item.Bezeichnung == "Japanisch")
+							{
+								<tr>
+									<td><a href="/SpeisekarteJapanisch">@item2.Bezeichnung</a></td>
+								</tr>
+							}
+							else if (@item.Bezeichnung == "Getränke")
+							{
+								<tr>
+									<td><a href="/SpeisekarteGetraenke">@item2.Bezeichnung</a></td>
+								</tr>
+							}
+							else if (@item.Bezeichnung == "Sonstiges")
+							{
+								<tr>
+									<td><a href="/SpeisekarteSonstiges">@item2.Bezeichnung</a></td>
+								</tr>
+							}
+							else
+							{
+								<tr>
+									<td><a href="/">@item2.Bezeichnung</a></td>
+								</tr>
+							}
+						}
+					}
+					<tr>
+						<td class="lowest"><br></td>
+					</tr>
+					<tr>
+						<td class="lowest"><br></td>
+
+					</tr>
+					<tr>
+						<td class="lowest"><br></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	}
 </div>
 
+
+
+
 @code {
+	private List<Menuitemkategorie> menuitemkategories = new List<Menuitemkategorie>();
+	private List<Menuitemueberkategorie> menuitemueberkategories = new List<Menuitemueberkategorie>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		menuitemkategories = await Http.GetFromJsonAsync<List<Menuitemkategorie>>("https://localhost:7076/api/MenuItemKategories");
+		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/MenuItemUeberkategories");
+	}
+
+	public class Menuitemkategorie
+	{
+		public int IdmenuItemKategorie { get; set; }
+		public string Bezeichnung { get; set; }
+		public int MenuItemUeberkategorieIdmenuItemUeberkategorie { get; set; }
+		public object MenuItemUeberkategorieIdmenuItemUeberkategorieNavigation { get; set; }
+		public List<object> MenuItemIdmenuItems { get; set; }
+	}
+
+	public class Menuitemueberkategorie
+	{
+		public int IdmenuItemUeberkategorie { get; set; }
+		public string Bezeichnung { get; set; }
+		public List<object> MenuItemKategorieIdmenuItemKategories { get; set; }
+		public List<object> MenuItemIdmenuItems { get; set; }
+	}
+
 
 }
