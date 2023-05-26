@@ -1,0 +1,81 @@
+﻿/**{
+	background-color: red;
+}*/
+
+/*navigation*/
+
+button.btn:first-child {
+    background-color: #8bfaa4;
+    /*not click able*/
+    pointer-events: none;
+    cursor: default;
+    border-width: 0px;
+}
+
+button.btn {
+    /* Verwirrung: Figma-Design: background-color: #c7ffd5; 
+		wurde jetzt aber fuer den Hintergrund verwendet*/
+    background-color: #8dffb5;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-radius: 20px;
+}
+
+    button.btn:nth-child(2) {
+        /*border-right: 2px solid black;*/
+        border-left-width: 0px;
+    }
+
+    button.btn:last-child {
+        border-right-width: 0px;
+    }
+
+
+
+/*menuitems*/
+
+.card.mt-3 {
+    /* background-color: rebeccapurple; */
+    border-radius: 30px;
+    border: 1px solid black;
+}
+
+
+
+/*warenkorb*/
+.card-header {
+    font-size: 16pt;
+    text-align: center;
+    padding-bottom: 15px;
+    /* background-color: white; */
+    border-top-right-radius: 20px;
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom-width: 0px;
+}
+
+.card {
+    border-radius: 32px;
+    border: 1px solid black;
+}
+
+p.card-text {
+    margin-left: 20px;
+}
+
+/*buttons*/
+a.btn.btn-primary.mx-2.mt-5 {
+    background-color: #facca3;
+    color: black;
+    border: none;
+    border-radius: 20px;
+}
+
+a.btn.btn-primary.mx-2.mt-1 {
+    background-color: #89f9a5;
+    color: black;
+    border: none;
+    border-radius: 20px;
+}

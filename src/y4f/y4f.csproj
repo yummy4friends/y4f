@@ -8,6 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\SpeisekarteCnDetails.razor.css" />
+    <None Remove="Pages\SpeisekarteDrDetails.razor.css" />
+    <None Remove="Pages\SpeisekarteEtcDetails.razor.css" />
+    <None Remove="Pages\SpeisekarteJpDetails.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\SpeisekarteCnDetails.razor.css" />
+    <Content Include="Pages\SpeisekarteDrDetails.razor.css" />
+    <Content Include="Pages\SpeisekarteEtcDetails.razor.css" />
+    <Content Include="Pages\SpeisekarteJpDetails.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\css\Site.css" />
   </ItemGroup>
 
