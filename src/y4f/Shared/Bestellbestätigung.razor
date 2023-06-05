@@ -1,0 +1,37 @@
+﻿@page "/Bestellbestätigung"
+
+<body>
+    <div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+        <h5>Vielen Dank für Ihre Bestellung</h5><br>
+        <p class="text">
+            Ihr Essen ist in <b>30 Minuten</b> abholbereit.
+            Sie erhalten eine Benachrichtigung sobald das Essen fertig ist. Wir würden uns freuen, wenn Sie uns ein <a href="Feedback">Feedback</a> geben.
+            <br><br><br><br>
+        </p>
+
+        <div class="progress">
+            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" style="width:50%"></div>
+        </div>
+
+        <table>
+            <tr class="loadtext">
+                <td>Bestellung eingegangen</td>
+                <td class="load2">Bestellung wird zubereitet</td>
+                <td class="load3">Essen abholbereit</td>
+            </tr>
+        </table>
+        
+        <div class="button">
+            <br><br><br><br>
+            <form id="button1" action="/">
+                <input type="submit" value="Zur Startseite" class="btn">
+            </form>
+        </div>
+
+    </div>
+
+</body>
+@code {
+
+    
+}
