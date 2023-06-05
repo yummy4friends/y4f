@@ -1,7 +1,7 @@
 ﻿body, html {
     padding: 0px;
     margin: 0px;
-    margin-bottom: 15px;
+    
 }
 
 p {
@@ -19,18 +19,14 @@ img {
     font-size: 13px;
 }
 
-.button {
-    padding-left: 25%;
-    padding-right: 25%;
-    text-align: center;
+textarea {
+    width: 100%;
 }
 
 #button1 {
     background-color: #89F9A5;
-    padding-left: 25%;
-    padding-right: 25%;
-    display: inline-block;
     border-radius: 50px;
+    text-align: center;
 }
 
 

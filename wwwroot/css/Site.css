@@ -3,8 +3,8 @@
 html, body {
     margin: 0px;
     padding: 0px;
+    overflow-y: hidden;
 }
-
 #content {
     background-color: #C7FFD1;
     padding: 5%;
@@ -12,17 +12,26 @@ html, body {
     border-radius: 10px;
     position: center;
 }
-
 .img {
     height: auto;
-    max-width: 100%;
-    margin: 10%;
-}
-
-form {
+    width: 60%;
+    margin: 4%;
     text-align: center;
-    background-color: #89F9A5;
-    border-radius: 50px;
-
 }
+form {
+    margin-bottom: 20px;
+    margin-top: 5px;
+    background-color: #89F9A5;
+    text-align: center;
+    width: 70%;
+}
+.form-control {
+    width: 70%;
+    border-radius: 50px;
+}
+
+#button1 {
+    border-radius: 50px;
+}
+
 
