@@ -26,20 +26,13 @@ img {
 }
 
 #button1 {
-    background-color: #F9BE89;
+    background-color: #89F9A5;
     padding-left: 25%;
     padding-right: 25%;
     display: inline-block;
     border-radius: 50px;
 }
-h4 {
-    text-align: center;
-<<<<<<< HEAD:Shared/Yummy-Punkte.razor.css
-}
 
 
 
 
-=======
-}
->>>>>>> dev:src/y4f/Shared/Yummy-Punkte.razor.css
