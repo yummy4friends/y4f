@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "y4f", "y4f.csproj", "{1B083D74-9507-4510-A532-8AAAD1FB6035}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "y4f", "src/y4f/y4f.csproj", "{1B083D74-9507-4510-A532-8AAAD1FB6035}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\WebApi\WebApi.csproj", "{2261B5DE-7B90-46FA-9FC2-1924A64BAF3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{1B083D74-9507-4510-A532-8AAAD1FB6035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B083D74-9507-4510-A532-8AAAD1FB6035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B083D74-9507-4510-A532-8AAAD1FB6035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2261B5DE-7B90-46FA-9FC2-1924A64BAF3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2261B5DE-7B90-46FA-9FC2-1924A64BAF3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2261B5DE-7B90-46FA-9FC2-1924A64BAF3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2261B5DE-7B90-46FA-9FC2-1924A64BAF3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

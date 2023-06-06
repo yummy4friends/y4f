@@ -1,0 +1,51 @@
+﻿@page "/TestFetchAllergienData"
+
+@inject HttpClient Http
+
+
+<PageTitle>Allergien</PageTitle>
+
+<h1>Allergien</h1>
+
+<p>This component demonstrates fetching data from the mysql server.</p>
+
+@if (allergien == null)
+{
+	<p><em>Loading...</em></p>
+}
+else
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Beschreibung</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var allergie in allergien)
+			{
+				<tr>
+					<td>@allergie.Idallergie</td>
+					<td>@allergie.Beschreibung</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+@code {
+	private const string ServiceEndpoint = "https://localhost:7076/api/Allergien";
+	private Allergie[]? allergien;
+
+	protected override async Task OnInitializedAsync()
+	{
+		allergien = await Http.GetFromJsonAsync<Allergie[]>(ServiceEndpoint);
+	}
+
+	public partial class Allergie
+	{
+		public int Idallergie { get; set; }
+
+		public string? Beschreibung { get; set; }
+	}
+}
