@@ -1,5 +1,139 @@
-﻿<h3>BestelluebersichtD_Chefin</h3>
+﻿@page "/BestelluebersichtD-Chefin"
+@layout ChefinLayout
 
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-lg-6">
+            @*Tabelle Ihre Bestellung*@
+            <div class="tbl-container">
+                <table class="table bdr">
+                    <thead class="bg_green">
+                        <tr>
+                            <td>Ihre Bestellung</td>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg_lightgreen" style="background-color:white;">
+                        <tr>
+                            <td class="br" style="padding-top:20px; padding-bottom:0px; border-bottom-width: 0px;">
+                                1 Nudel mit Hühnerfleisch (groß)
+                                <div style="font-size:0.7rem;padding-left:15px;">mit Knoblauchsoße</div>
+                            </td>
+                            <td class="d-flex justify-content-center align-items-center" style="padding-top:20px; padding-bottom:0px; border-style:hidden;">9,10€</td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;">1 Coca Cola</td>
+                            <td class="d-flex justify-content-center align-items-center" style="padding-top:0px; border-style:hidden;">2,50€</td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
+                        </tr>
+                        <tr>
+                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
+                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg_lightgreen">
+                        <tr style="border-top:solid 1px black; background-color:white;">
+                            <th class="" style="text-align:right;">Summe</th>
+                            <td class="d-flex justify-content-center align-items-center">11,60€</td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+
+        </div>
+        <div class="col-sm-12 col-lg-6">
+            
+                        <div class="d-flex flex-column align-items-center  ">
+                            <div class="tbl-container  w-100">
+                                <!-- <== overflow: hidden applied to parent -->
+                    <table class="table table-bordered bdr " style=" border-radius: 50px; margin-left: 50px;">
+                                    <thead class="bg_green">
+                                        <tr>
+                                            <td class="d-flex justify-content-center align-items-center" style="border-bottom:0px;">
+                                                <p>Abholzeit</p>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        <tr>
+                                            <td class="d-flex justify-content-center align-items-center" style="padding-top:0px; background-color:white;">
+                                            <div style="margin:20px;">
+                                                    <div class="d-flex justify-content-center align-items-center" >
+                                                        <p>12:30 Uhr</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                    <div class="d-flex flex-column" style="align-items: center;  margin-left: 100px;">
+                        <button class="btn_back w-75">Zurück</button>
+                        <button class="btn btn-danger w-75" style="border-radius: 50px; padding-top:12px; padding-bottom:12px; color:black;">Bestellung auflösen</button>
+                        <button class="btn_forward w-75">Bestellung abschließen</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+                @*Buttons*@
+                
+            </div>
+        
+
+@*<div class="h-100">
+                @*Essen Abholen?
+                <div class="row h-25 w-100">
+                    <div class="col">
+        </div>
+    </div>
+</div>*@
 @code {
 
 }
