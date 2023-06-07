@@ -23,3 +23,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
         FOLDER: release/wwwroot
+    - name: Change base-tag in index.html from / to y4f
+      run: sed -i 's/<base href="\/" \/>/<base href="\/y4f\/" \/>/g' release/wwwroot/index.html
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
