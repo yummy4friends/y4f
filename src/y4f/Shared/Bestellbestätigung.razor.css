@@ -19,6 +19,14 @@ img {
     font-size: 13px;
 }
 
+<<<<<<< HEAD:Shared/Bestellbestätigung.razor.css
+#button1 {
+    background-color: #89F9A5;
+    border-radius: 50px;
+    text-align: center;
+}
+
+=======
 .button {
     padding-left: 25%;
     padding-right: 25%;
@@ -32,6 +40,7 @@ img {
     display: inline-block;
     border-radius: 50px;
 }
+>>>>>>> dev:src/y4f/Shared/Bestellbestätigung.razor.css
 h5 {
     text-align: center;
 }
@@ -44,7 +53,10 @@ h5 {
     text-align: right;
 }
 
+<<<<<<< HEAD:Shared/Bestellbestätigung.razor.css
+=======
 
+>>>>>>> dev:src/y4f/Shared/Bestellbestätigung.razor.css
 .loadtext {
     font-size: 14px;
 }

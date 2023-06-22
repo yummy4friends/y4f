@@ -1,20 +1,28 @@
 ﻿ @page "/"
  @layout Startseite
 
-
-<PageTitle>Yummy4Friends</PageTitle>
-
-
-<body style='--blazor-load-percentage: 100%; --blazor-load-percentage-text: "100%"; background-color:#C7FFD5;'>
+<body >
     <div class="container col-lg-6 col-md-9 col-sm-12 d-flex flex-column " id="content">
-        <center><h1>Herzlich Willkommen!</h1></center>
+        <center>
+            <h1>Herzlich Willkommen!</h1>
 
-        <img src="assets/Logo_new.png" class="img" title="logo image">
+            <img src="assets/Logo_new.png" class="img" title="logo image">
 
-        <form action="Speisekarte">
-            <input type="submit" value="Zur Speisekarte" class="btn" />
-      </form>
+
+            <form id="button1" action="https://qrcodescan.in/">
+                <input type="submit" value="QR-Code einscannen" class="btn">
+
+            </form>
+
+            <input type="text" class="form-control" id="qrcode" placeholder="QR-Code manuell eintragen" name="qrcode">
+            <form id="button1" action="Startseite">
+                <input type="submit" value="Bestätigen" class="btn">
+            </form>
+        </center>
     </div>
-
 </body>
+
+
+
+
 

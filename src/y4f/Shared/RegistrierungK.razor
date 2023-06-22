@@ -1,0 +1,26 @@
+﻿@page "/RegistrierungK"
+@layout Registrierung
+
+<div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+    <form id="button1" action="https://qrcodescan.in/">
+        <input type="submit" value="QR-Code einscannen" class="btn">
+        
+    </form>
+
+    <input type="text" class="form-control" id="qrcode" placeholder="QR-Code manuell eintragen" name="qrcode">
+    <form id="button1" action="Startseite">
+        <input type="submit" value="Bestätigen" class="btn">
+
+    </form>
+    <input type="text" class="form-control" id="email" placeholder="Email eintragen" name="email">
+    <form id="button1" action="">
+        <input type="submit" value="Email abschicken" class="btn">
+        
+    </form>
+
+    <p>Durch die Eingabe der Email Adresse wird Ihnen ein QR-Code für die Anmeldung zugeschickt.</p>
+
+</div>
+@code {
+
+}

@@ -1,9 +1,17 @@
+<<<<<<< HEAD:Shared/Feedback/FBestätigung.razor.css
+﻿h4 {
+=======
 ﻿
 h4 {
+>>>>>>> dev:src/y4f/Shared/Feedback/FBestätigung.razor.css
     text-align: center;
     margin-top: 45%;
 }
 
 form {
     margin-bottom: 45%;
+<<<<<<< HEAD:Shared/Feedback/FBestätigung.razor.css
+    border-radius: 50px;
+=======
+>>>>>>> dev:src/y4f/Shared/Feedback/FBestätigung.razor.css
 }
