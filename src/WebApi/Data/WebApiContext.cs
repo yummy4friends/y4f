@@ -25,8 +25,9 @@ public partial class WebApiContext : DbContext
     public virtual DbSet<Menuitemueberkategorie> Menuitemueberkategories { get; set; }
 
     public virtual DbSet<Rabatt> Rabatts { get; set; }
+    public virtual DbSet<Admin> Admins{ get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
             .UseCollation("utf8_general_ci")
@@ -221,6 +222,12 @@ public partial class WebApiContext : DbContext
             entity.Property(e => e.GueltigkeitBis).HasColumnType("datetime");
             entity.Property(e => e.GueltigkeitVon).HasColumnType("datetime");
             entity.Property(e => e.Prozent).HasPrecision(8, 2);
+        });
+
+        modelBuilder.Entity<Admin>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+            entity.ToTable("admin");
         });
 
         OnModelCreatingPartial(modelBuilder);
