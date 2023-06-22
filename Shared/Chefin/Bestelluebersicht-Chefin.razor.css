@@ -1,28 +1,23 @@
 ﻿tbody {
     border-color: black;
 }
-
 td {
     text-align:center;
     text-decoration: none;
 }
-
 table {
     border-radius: 50px !important;
     margin-left: 50px;
 }
-
 td > a {
     text-decoration: none;
     color: black;
 }
-
 #button {
     margin-bottom: 35px;
     border-radius: 50px;
     margin-left: 100px;
 }
-
 #text {
     margin-top: 50px;
     margin-bottom: 45px;
@@ -36,7 +31,6 @@ td > a {
     border-style:none;
     text-align: center;
 }
-
 thead {
     background-color: #89F9A5;
     border-color: #89F9A5;
