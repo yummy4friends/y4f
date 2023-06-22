@@ -1,0 +1,52 @@
+﻿body, html {
+    padding: 0px;
+    margin: 0px;
+<<<<<<< HEAD:Shared/Feedback/Feedback.razor.css
+    
+=======
+    margin-bottom: 15px;
+>>>>>>> dev:src/y4f/Shared/Feedback/Feedback.razor.css
+}
+
+p {
+    text-align:center;
+}
+
+img {
+    width: 20%;
+    height: auto;
+    padding: 5px;
+}
+
+.text {
+    color: grey;
+    font-size: 13px;
+}
+
+<<<<<<< HEAD:Shared/Feedback/Feedback.razor.css
+textarea {
+    width: 100%;
+=======
+.button {
+    padding-left: 25%;
+    padding-right: 25%;
+    text-align: center;
+>>>>>>> dev:src/y4f/Shared/Feedback/Feedback.razor.css
+}
+
+#button1 {
+    background-color: #89F9A5;
+<<<<<<< HEAD:Shared/Feedback/Feedback.razor.css
+    border-radius: 50px;
+    text-align: center;
+=======
+    padding-left: 25%;
+    padding-right: 25%;
+    display: inline-block;
+    border-radius: 50px;
+>>>>>>> dev:src/y4f/Shared/Feedback/Feedback.razor.css
+}
+
+
+
+

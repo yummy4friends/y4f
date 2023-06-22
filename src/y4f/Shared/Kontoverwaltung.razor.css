@@ -1,0 +1,27 @@
+﻿body {
+    background-color: white;
+}
+
+<<<<<<< HEAD:Shared/Kontoverwaltung.razor.css
+=======
+h3 {
+    font-weight: bold;
+}
+
+>>>>>>> dev:src/y4f/Shared/Kontoverwaltung.razor.css
+img {
+    width: 150px;
+    height: 150px;
+    padding: 0px;
+    margin: 0px;
+}
+
+button {
+    background-color: #89f9a5;
+}
+
+
+
+    
+
+
