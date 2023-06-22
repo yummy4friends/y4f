@@ -7,10 +7,10 @@ services:
     labels:
       - traefik.docker.network=traefik
       - traefik.enable=true
-      - traefik.http.routers.y4f.entrypoints=web-secure
-      - traefik.http.routers.y4f.rule=Host(`api.y4f.hopeless-cloud.xyz`)
-      - traefik.http.routers.y4f.tls=true
-      - traefik.http.routers.y4f.tls.certResolver=default
+      - traefik.http.routers.y4f-webapi.entrypoints=web-secure
+      - traefik.http.routers.y4f-webapi.rule=Host(`api.y4f.hopeless-cloud.xyz`)
+      - traefik.http.routers.y4f-webapi.tls=true
+      - traefik.http.routers.y4f-webapi.tls.certResolver=default
     networks:
       - default
       - traefik
