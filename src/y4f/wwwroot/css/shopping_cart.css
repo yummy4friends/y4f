@@ -11,6 +11,7 @@
     border-radius: 17px;
     overflow: hidden;
     border-color: #C7FFD5;
+    border-width: 0px;
 }
 
 .bg_lightgreen {
@@ -23,19 +24,19 @@
     border-bottom-width: 0;
 }
 
-.btn_back {
+.btn_bg {
     background-color: #F9BE89;
     /*width: 60%;*/
     margin-bottom: 13px;
     border-radius: 30px;
-    height: 50px;
-    border: 0px;
+    /*height: 50px;*/
+    /*border: 0px;*/
 }
 
 .btn_forward {
     background-color: #89F9A5;
     /*width: 60%;*/
     border-radius: 30px;
-    height: 50px;
-    border: 0px;
+    /*height: 50px;*/
+    /*border: 0px;*/
 }
