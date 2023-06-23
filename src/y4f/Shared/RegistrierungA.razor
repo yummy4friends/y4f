@@ -1,18 +1,34 @@
 ﻿@page "/RegistrierungA"
 @layout Registrierung
+@inject NavigationManager NavManager
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 
 <div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
     <p>Benutzername:</p>
-        <input type="text" class="form-control" id="name" name="name">
+    <input type="text" class="form-control" id="name" name="name" @bind="@inputName">
 
     <p>Passwort:</p>
-        <input type="text" class="form-control" id="password" name="password">
-
-    <form id="button" action="Bestelluebersicht">
-        <input type="submit" value="Login" class="btn"> 
-    </form>
-
+    <input type="password" class="form-control" id="password" name="password" @bind="@inputPassword">
+    
+    <button type="button" class="btn" @onclick="@Login">Login</button>
 </div>
-@code {
 
+@code {
+    public string inputName { get; set; } = string.Empty;
+    public string inputPassword { get; set; } = string.Empty;
+
+    public static string userName { get; set; } = string.Empty;
+
+    public void Login() {
+        if (inputName == userDataName && inputPassword == userDataPassword) {
+            localStorage.SetItem("name", inputName);
+            userName = localStorage.GetItem<string>("name");
+            NavManager.NavigateTo("/Bestelluebersicht");
+        }
+    }
+}
+
+@code {
+    public string userDataName { get; set; } = "";
+    public string userDataPassword { get; set; } = "";
 }
