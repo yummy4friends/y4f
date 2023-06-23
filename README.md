@@ -24,7 +24,7 @@ Dependency names will depend on your linux distribution.
 
 For this this project you also need Traefik. Or you can use your own reverse proxy and edit the docker-compose files to reflect that. 
 
-## Installation
+## Running it
 
 Clone the repo.
 
@@ -43,3 +43,5 @@ Also start up the API.
 ```bash
 cd src/WebApi/ && docker-compose up --build -d
 ```
+
+This setup is for showcasing the project and is therefore not intended for production.
