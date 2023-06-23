@@ -12,12 +12,11 @@ services:
       - traefik.http.routers.y4f-webapi.tls=true
       - traefik.http.routers.y4f-webapi.tls.certResolver=default
     networks:
-      - default
+      - y4f-default
       - traefik
     restart: unless-stopped
 networks:
-  default:
-    name: y4f-default
+  y4f-default:
     external: true
   traefik:
     external: true
