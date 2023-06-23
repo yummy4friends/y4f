@@ -1,6 +1,7 @@
 ﻿@page "/SpeisekarteJapanisch"
 
 @inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 
 <h1>Speisekarte Japanisch</h1>
 @* create an container bootstrap 5*@
@@ -14,8 +15,6 @@
 				<button type="button" class="btn">Bento</button>
 				<button type="button" class="btn">Nachspeise</button>
 			</div>
-
-
 			@foreach (var item in menuitemueberkategories)
 			{
 				@if (item.Bezeichnung == "Japanisch")
@@ -28,8 +27,7 @@
 							{
 								if (item2.IdmenuItemKategorie == item3.MenuItemKategorieIdmenuItemKategorie)
 								{
-
-									<div class="card mt-3 ">
+									<div class="card mt-3" @onclick="@(() => SetMenuItemId(item3.IdmenuItem))">
 										<div class="card-body">
 											@*create two divs columns*@
 											<div class="row">
@@ -47,12 +45,9 @@
 								}
 							}
 						}
-
 					}
-
 				}
 			}
-
 		</div>
 		<div class="col-4">
 			@* warenkorb anzeige als bootstrap card*@
@@ -60,24 +55,35 @@
 				<div class="card-header">
 					Warenkorb
 				</div>
-				<div class="card-body">
-					<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">1 Nudeln mit Hühnerfleisch</h5>
-					<p class="card-text" style="font-size:8pt;margin-bottom:0px;">mit Knoblauchsoße</p>
-					<p class="card-text" id="preis" style="text-align:right; "><span style="background-color:#c7ffd5; border-radius:20px; font-size:10pt; padding:5px">9.10€</span></p>
-				</div>
-				<div class="card-body">
-					<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">1 Coca Cola</h5>
-					@*<p class="card-text" style="font-size:8pt;margin-bottom:0px;">mit Knoblauchsoße</p>*@
-					<p class="card-text" id="preis" style="text-align:right; "><span style="background-color:#c7ffd5; border-radius:20px; font-size:10pt; padding:5px">3.10€</span></p>
-				</div>
+				@if (menuitemIds.Count == 0)
+				{
+					<div class="card-body">
+						<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">Warenkorb ist leer</h5>
+					</div>
+				}
+				else
+				{
+					@foreach (var item in menuitemIds)
+					{
+						@foreach (var item2 in menuitems)
+						{
+							@if (item.Key == item2.IdmenuItem)
+							{
+								<div class="card-body">
+									<p>@item.Value</p>
+									<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">@item2.Bezeichnung</h5>
+									<p class="card-text" style="font-size:8pt;margin-bottom:0px;">@item2.Zusatzinformation</p>
+									<p class="card-text" id="preis" style="text-align:right; "><span style="background-color:#c7ffd5; border-radius:20px; font-size:10pt; padding:5px">@item2.Preis</span></p>
+								</div>
+							}
+						}
+					}
+				}
 			</div>
-			<div class="d-flex flex-column">
-				<a href="#" class="btn btn-primary mx-2 mt-5">Zurück</a>
-				<a href="#" class="btn btn-primary mx-2 mt-1">Weiter</a>
+			<div class="d-flex flex-column mb-5">
+				<a href="/speisekarte" class="btn btn-primary mx-2 mt-5">Zurück</a>
+				<a href="/shopping_cart" class="btn btn-primary mx-2 mt-1 mb-5">Weiter</a>
 			</div>
-
-
-
 		</div>
 	</div>
 </div>
@@ -86,6 +92,21 @@
 
 
 @code {
+
+	public Dictionary<int, int> menuitemIds = new Dictionary<int, int>();
+
+	private void SetMenuItemId(int id)
+	{
+		if (menuitemIds.ContainsKey(id))
+		{
+			menuitemIds[id]++;
+		}
+		else
+		{
+			menuitemIds.Add(id, 1);
+		}
+		localStorage.SetItem<Dictionary<int, int>>("MenuItemIds", menuitemIds);
+	}
 	// allergien, bestellungsposition, kunde, menuitem, menuitemkategorie, menuitemueberkategorie, rabatt
 
 	private List<Allergie> allergien = new List<Allergie>();
@@ -98,6 +119,10 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		if (localStorage.GetItem<Dictionary<int, int>>("MenuItemIds") != null)
+		{
+			menuitemIds = localStorage.GetItem<Dictionary<int, int>>("MenuItemIds");
+		}
 		allergien = await Http.GetFromJsonAsync<List<Allergie>>("https://localhost:7076/api/allergien");
 		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
