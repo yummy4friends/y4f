@@ -1,5 +1,13 @@
 # y4f
 
+## Description (German)
+
+Yummy4Friends ist eine benutzerfreundliche und visuell ansprechende Webapp zur Onlinebestellung von Speisen mit der dynamischen Einbindung einer Kunden- und Speisendatenbank unter Berücksichtigung von Sonderwünschen. Zur Kundenbindung wird auch die Verwaltung von Kundenrabatten, Vorbestellmöglichkeiten sowie konfigurierbare Abholtermine realisiert.
+
+## Description (English)
+
+Yummy4Friends is a user friendly and visually appealing WebApp for ordering food or other things online. Food or other stuff get dynamically fetched from a customer and food database while also taking into account special requests. To attract customers one can also offer limeted time sales/coupons, ordering in advance as well as being able to choosing their preferred pickup time.  
+
 ## Tech Stack
 
 [Blazor WebAssembly](https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor)
