@@ -16,44 +16,40 @@
 				<button type="button" class="btn">Vorspeisen</button>
 			</div>
 
-			@* create an bootstrap card for each speise*@
-			@*make card round with border*@
-			<div class="card mt-3">
-				<div class="card-body">
-					<h5 class="card-title">Nudeln mit Hühnerfleisch (A, E)</h5>
-					<p class="card-text">Huhn, Gemüse</p>
-				</div>
-			</div>
+			@foreach (var item in menuitemueberkategories)
+			{
+				@if (item.Bezeichnung == "Japanisch")
+				{
+					@foreach (var item2 in menuitemkategories)
+					{
+						if (item2.MenuItemUeberkategorieIdmenuItemUeberkategorie == item.IdmenuItemUeberkategorie)
+						{
+							@foreach (var item3 in menuitems)
+							{
+								if (item2.IdmenuItemKategorie == item3.MenuItemKategorieIdmenuItemKategorie)
+								{
 
-			<div class="card mt-3">
-				<div class="card-body">
-					<h5 class="card-title">Knusprige Ente auf Nudeln (A, D)</h5>
-					<p class="card-text">Ente</p>
-				</div>
-			</div>
-
-			<div class="card mt-3 ">
-				<div class="card-body">
-					@*create two divs columns*@
-					<div class="row">
-						<div class="col-8">
-							<h5 class="card-title">Nudeln mit Tofu (D, F)</h5>
-							<p class="card-text">Tofu</p>
-						</div>
-						@*div text center*@
-						<div class="col-4 d-flex justify-content-center align-items-center">
-							<div style="font-size:15pt;">10,00€</div>
-						</div>
-
-					</div>
-
-
-
-
-
-				</div>
-			</div>
-
+									<div class="card mt-3 ">
+										<div class="card-body">
+											@*create two divs columns*@
+											<div class="row">
+												<div class="col-8">
+													<h5 class="card-title">@item3.Bezeichnung</h5>
+													<p class="card-text">@item3.Zusatzinformation</p>
+												</div>
+												@*div text center*@
+												<div class="col-4 d-flex justify-content-center align-items-center">
+													<div style="font-size:15pt;">@item3.Preis</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								}
+							}
+						}
+					}
+				}
+			}
 
 		</div>
 		<div class="col-4">
@@ -90,4 +86,114 @@
 
 
 @code {
+	// allergien, bestellungsposition, kunde, menuitem, menuitemkategorie, menuitemueberkategorie, rabatt
+
+	private List<Allergie> allergien = new List<Allergie>();
+	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
+	private List<Kunde> kunden = new List<Kunde>();
+	private List<Menuitem> menuitems = new List<Menuitem>();
+	private List<Menuitemkategorie> menuitemkategories = new List<Menuitemkategorie>();
+	private List<Menuitemueberkategorie> menuitemueberkategories = new List<Menuitemueberkategorie>();
+	private List<Rabatt> rabatte = new List<Rabatt>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		allergien = await Http.GetFromJsonAsync<List<Allergie>>("https://localhost:7076/api/allergien");
+		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+		menuitems = await Http.GetFromJsonAsync<List<Menuitem>>("https://localhost:7076/api/Menuitems");
+		menuitemkategories = await Http.GetFromJsonAsync<List<Menuitemkategorie>>("https://localhost:7076/api/Menuitemkategories");
+		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/Menuitemueberkategories");
+		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
 	}
+
+	public class Allergie
+	{
+		public int Idallergie { get; set; }
+
+		public string? Beschreibung { get; set; }
+
+		public virtual ICollection<Menuitem> MenuItemIdmenuItems { get; set; } = new List<Menuitem>();
+	}
+	public class Bestellungsposition
+	{
+		public int Idbestellung { get; set; }
+
+		public int? Menge { get; set; }
+
+		public DateTime? Datum { get; set; }
+
+		public int KundeIdkunde { get; set; }
+
+		public int RabattIdrabatt { get; set; }
+
+		public virtual Kunde KundeIdkundeNavigation { get; set; } = null!;
+
+		public virtual Rabatt RabattIdrabattNavigation { get; set; } = null!;
+
+		public virtual ICollection<Menuitem> MenuItemIdmenuItems { get; set; } = new List<Menuitem>();
+	}
+	public class Kunde
+	{
+		public int Idkunde { get; set; }
+
+		public string? Code { get; set; }
+
+		public int? Treuepunkte { get; set; }
+
+		public virtual ICollection<Bestellungsposition> Bestellungspositions { get; set; } = new List<Bestellungsposition>();
+	}
+
+	public class Menuitem
+	{
+		public int IdmenuItem { get; set; }
+
+		public string? Bezeichnung { get; set; }
+
+		public string? Zusatzinformation { get; set; }
+
+		public decimal? Preis { get; set; }
+
+		public int MenuItemKategorieIdmenuItemKategorie { get; set; }
+
+		public virtual Menuitemkategorie MenuItemKategorieIdmenuItemKategorieNavigation { get; set; } = null!;
+
+		public virtual ICollection<Allergie> AllergieIdallergies { get; set; } = new List<Allergie>();
+
+		public virtual ICollection<Bestellungsposition> BestellungspositionIdbestellungs { get; set; } = new List<Bestellungsposition>();
+	}
+	public class Menuitemkategorie
+	{
+		public int IdmenuItemKategorie { get; set; }
+
+		public string? Bezeichnung { get; set; }
+
+		public int MenuItemUeberkategorieIdmenuItemUeberkategorie { get; set; }
+
+		public virtual Menuitemueberkategorie MenuItemUeberkategorieIdmenuItemUeberkategorieNavigation { get; set; } = null!;
+
+		public virtual ICollection<Menuitem> Menuitems { get; set; } = new List<Menuitem>();
+	}
+
+	public class Menuitemueberkategorie
+	{
+		public int IdmenuItemUeberkategorie { get; set; }
+
+		public string? Bezeichnung { get; set; }
+
+		public virtual ICollection<Menuitemkategorie> Menuitemkategories { get; set; } = new List<Menuitemkategorie>();
+	}
+
+	public class Rabatt
+	{
+		public int Idrabatt { get; set; }
+
+		public decimal? Prozent { get; set; }
+
+		public DateTime? GueltigkeitVon { get; set; }
+
+		public DateTime? GueltigkeitBis { get; set; }
+
+		public virtual ICollection<Bestellungsposition> Bestellungspositions { get; set; } = new List<Bestellungsposition>();
+	}
+}
