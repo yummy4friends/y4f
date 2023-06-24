@@ -136,3 +136,5 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+/src/WebApi/appsettings.json
+/src/WebApi/appsettings.json

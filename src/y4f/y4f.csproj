@@ -8,10 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\SpeisekarteCnDetails.razor.css" />
+    <None Remove="Pages\SpeisekarteDrDetails.razor.css" />
+    <None Remove="Pages\SpeisekarteEtcDetails.razor.css" />
+    <None Remove="Pages\SpeisekarteJpDetails.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\SpeisekarteCnDetails.razor.css" />
+    <Content Include="Pages\SpeisekarteDrDetails.razor.css" />
+    <Content Include="Pages\SpeisekarteEtcDetails.razor.css" />
+    <Content Include="Pages\SpeisekarteJpDetails.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\css\Site.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.1" PrivateAssets="all" />
   </ItemGroup>
