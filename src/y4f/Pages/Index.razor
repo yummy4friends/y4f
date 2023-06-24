@@ -3,6 +3,7 @@
 
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
 
 <PageTitle>Yummy4Friends</PageTitle>
 
@@ -35,6 +36,7 @@
 			if (kunde.Code == qrcodeValue)
 			{
 				localStorage.SetItem("kunde", kunde);
+				_navigationManager.NavigateTo("/speisekarte");
 				break;
 			}
 		}
