@@ -1,16 +1,18 @@
-﻿@page "/RegistrierungA"
+@page "/RegistrierungA"
 @layout Registrierung
 @inject NavigationManager NavManager
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 
 <div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
     <p>Benutzername:</p>
+
     <input type="text" class="form-control" id="name" name="name" @bind="@inputName">
 
     <p>Passwort:</p>
     <input type="password" class="form-control" id="password" name="password" @bind="@inputPassword">
     
     <button type="button" class="btn" @onclick="@Login">Login</button>
+
 </div>
 
 @code {
