@@ -14,8 +14,6 @@
 
 		<img src="assets/Logo_new.png" class="img" title="logo image">
 
-		<button type="submit" id="button1" class="btn">QR-Code einscannen</button>
-
 		<input type="text" class="form-control" id="qrcode" placeholder="Zugangscode eintragen" name="qrcode" @bind-value="@qrcodeValue">
 
 		<button type="submit" id="button1" class="btn" @onclick="@(() => CheckCode())">Bestätigen</button>
@@ -43,8 +41,6 @@
 	{
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
 	}
-
-
 
 	public class Kunde
 	{
