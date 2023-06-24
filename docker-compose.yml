@@ -1,0 +1,22 @@
+version: "3.4"
+services:
+  y4f:
+    build: .
+    ports:
+      - "5248:5248"
+    labels:
+      - traefik.docker.network=traefik
+      - traefik.enable=true
+      - traefik.http.routers.y4f.entrypoints=web-secure
+      - traefik.http.routers.y4f.rule=Host(`y4f.hopeless-cloud.xyz`)
+      - traefik.http.routers.y4f.tls=true
+      - traefik.http.routers.y4f.tls.certResolver=default
+    networks:
+     - default
+     - traefik
+    restart: unless-stopped
+networks:
+  default:
+    name: y4f-default
+  traefik:
+    external: true

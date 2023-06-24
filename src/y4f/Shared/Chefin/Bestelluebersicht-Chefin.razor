@@ -1,0 +1,82 @@
+﻿@page "/Bestelluebersicht"
+@layout ChefinLayout
+
+<div class="container d-flex flex-column">
+    <div class="row">
+        <div class="col-lg-8">
+            <br /><br />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2">Aktive Bestellungen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="BDetail">#1234 &nbsp; 12:30</a></td>
+                        <td><a href="BDetail">#2345 &nbsp; 18:45</a></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="BDetail">#3456 &nbsp; 13:00</a></td>
+                        <td><a href="BDetail">#4567 &nbsp; 19:00</a></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="BDetail">#5678 &nbsp; 14:30</a></td>
+                        <td><a href="BDetail">#6789 &nbsp; 19:15</a></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="BDetail">#4321 &nbsp; 15:15</a></td>
+                        <td><a href="BDetail">#5432 &nbsp; 19:15</a></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="BDetail">#6543 &nbsp; 15:30</a></td>
+                        <td><a href="BDetail">#7654 &nbsp; 19:15</a></td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="BDetail">#7654 &nbsp; 15:30</a></td>
+                        <td>&nbsp;</td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="BDetail">#8765 &nbsp; 16:00</a></td>
+                        <td>&nbsp;</td>
+                        
+                    </tr>
+                    <tr>
+                        <td><a href="BDetail">#9876 &nbsp; 17:30</a></td>
+                        <td>&nbsp;</td>
+                        
+                    </tr>
+                    
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-3">
+            <p id="text"  readonly >Abholzeit</p>
+            <br /> 
+            <form id="button" action="Bestelluebersicht">
+                <input type="submit" value="30 Min" class="btn">
+            </form>
+            <form id="button" action="Bestelluebersicht">
+                <input type="submit" value="45 Min" class="btn">
+            </form>
+            <form id="button" action="Bestelluebersicht">
+                <input type="submit" value="1 Std" class="btn">
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+
+}
