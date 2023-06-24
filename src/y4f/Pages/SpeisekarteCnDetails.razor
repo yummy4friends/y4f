@@ -1,130 +1,94 @@
-﻿@page "/shopping_cart"
+﻿@page "/SpeisekarteChinesich"
+
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
-@inject NavigationManager _navigationManager
-<PageTitle>Warenkorb</PageTitle>
 
-<h1>Warenkorb</h1>
+<h1>Speisekarte Chinesisch</h1>
 <div class="container">
 	<div class="row">
-	</div>
+		<div class="col-8">
+			<div class="btn-group d-flex" role="group">
+				<button type="button" class="btn">Chinesisch</button>
+				<button type="button" class="btn">Nudel</button>
+				<button type="button" class="btn">Reis</button>
+				<button type="button" class="btn">Nachspeise</button>
+			</div>
 
-</div>
-
-
-<div class="container">
-	<div class="row">
-		<div class="col-sm-12 col-lg-6">
-			@*Tabelle Ihre Bestellung*@
-			<div class="tbl-container">
-				<table class="table bdr">
-					<thead class="bg_green">
-						<tr>
-							<td>Ihre Bestellung</td>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody class="bg_lightgreen">
-						@if (menuitemIds.Count == 0)
+			@foreach (var item in menuitemueberkategories)
+			{
+				@if (item.Bezeichnung == "Chinesisch")
+				{
+					@foreach (var item2 in menuitemkategories)
+					{
+						if (item2.MenuItemUeberkategorieIdmenuItemUeberkategorie == item.IdmenuItemUeberkategorie)
 						{
-							<div class="card-body">
-								<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">Warenkorb ist leer</h5>
-							</div>
-						}
-						else
-						{
-							@foreach (var item in menuitemIds)
+							@foreach (var item3 in menuitems)
 							{
-								@foreach (var item2 in menuitems)
+								if (item2.IdmenuItemKategorie == item3.MenuItemKategorieIdmenuItemKategorie)
 								{
-									@if (item.Key == item2.IdmenuItem)
-									{
-										<tr>
-
-											<td class="br" style="padding-top:20px; padding-bottom:0px; border-bottom-width: 0px;">
-												@item.Value x
-												@item2.Bezeichnung
-												<button @onclick="@(() => DelMenuItemId(item.Key))" class="btn btn-danger">del</button>
-
-
-												<div style="font-size:0.7rem;padding-left:15px;">@item2.Zusatzinformation</div>
-											</td>
-											<td class="d-flex justify-content-center align-items-center" style="padding-top:20px; border-bottom-width:0px;">@(item2.Preis * item.Value)€</td>
-										</tr>
-									}
+									<div class="card mt-3 " @onclick="@(() => SetMenuItemId(item3.IdmenuItem))">
+										<div class="card-body">
+											@*create two divs columns*@
+											<div class="row">
+												<div class="col-8">
+													<h5 class="card-title">@item3.Bezeichnung</h5>
+													<p class="card-text">@item3.Zusatzinformation</p>
+												</div>
+												@*div text center*@
+												<div class="col-4 d-flex justify-content-center align-items-center">
+													<div style="font-size:15pt;">@item3.Preis</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								}
-
 							}
 						}
-					</tbody>
-					<tfoot class="bg_lightgreen">
-						<tr style="border-top:solid 1px black;">
-							<th class="" style="text-align:right;">Summe</th>
-							<td class="d-flex justify-content-center align-items-center">
-								@summe€
-							</td>
-						</tr>
-					</tfoot>
-				</table>
-
-			</div>
-
+					}
+				}
+			}
 		</div>
-		<div class="col-sm-12 col-lg-6">
-			<div class="h-100">
-				@*Essen Abholen?*@
-				<div class="row h-25 w-100 ">
-					<div class="col">
-						<div class="d-flex flex-column align-items-center  ">
-							<div class="tbl-container bdr  w-100">
-								<!-- <== overflow: hidden applied to parent -->
-								<table class="table bdr" cellspacing="0" cellpadding="0">
-									<thead class="bg_green">
-										<tr>
-											<td class="d-flex justify-content-center align-items-center" style="border-bottom:0px;">
-												Wann wollen Sie Ihr Essen abholen?
-											</td>
-										</tr>
-									</thead>
-									<tbody class="bg_lightgreen">
-										<tr>
-											<td class="d-flex justify-content-center align-items-center" style="padding-top:0px;">
-												<div style="margin:20px;">
-													<div class="d-flex justify-content-center align-items-center">
-														<input type="number" style="width:80px" min="10" max="19" />
-														<input type="number" style="width:80px" min="0" max="59" />
-														&nbsp;
-														Uhr
-													</div>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
+		<div class="col-4">
+			@* warenkorb anzeige als bootstrap card*@
+			<div class="card">
+				<div class="card-header">
+					Warenkorb
 				</div>
-
-				@*Buttons*@
-				<div class="row h-75 w-100">
-					<div class="col mt-auto ">
-						<div class="d-flex flex-column align-items-center  ">
-							<a href="/speisekarte" class="btn_bg w-75 btn text-center">Zurück</a>
-							<a href="#" class="btn_forward btn w-75 ">Weiter</a>
-						</div>
+				@if (menuitemIds.Count == 0)
+				{
+					<div class="card-body">
+						<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">Warenkorb ist leer</h5>
 					</div>
-				</div>
+				}
+				else
+				{
+					@foreach (var item in menuitemIds)
+					{
+						@foreach (var item2 in menuitems)
+						{
+							@if (item.Key == item2.IdmenuItem)
+							{
+								<div class="card-body">
+									<p>@item.Value</p>
+									<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">@item2.Bezeichnung</h5>
+									<p class="card-text" style="font-size:8pt;margin-bottom:0px;">@item2.Zusatzinformation</p>
+									<p class="card-text" id="preis" style="text-align:right; "><span style="background-color:#c7ffd5; border-radius:20px; font-size:10pt; padding:5px">@item2.Preis</span></p>
+								</div>
+							}
+						}
+					}
+				}
+			</div>
+			<div class="d-flex flex-column mb-5">
+				<a href="/speisekarte" class="btn btn-primary mx-2 mt-5">Zurück</a>
+				<a href="/shopping_cart" class="btn btn-primary mx-2 mt-1 mb-5">Weiter</a>
 			</div>
 		</div>
 	</div>
 </div>
-
-
 
 
 @code {
-	public decimal summe;
 	public Dictionary<int, int> menuitemIds = new Dictionary<int, int>();
 
 	private void SetMenuItemId(int id)
@@ -139,28 +103,8 @@
 		}
 		localStorage.SetItem<Dictionary<int, int>>("MenuItemIds", menuitemIds);
 	}
-
-
-	private void DelMenuItemId(int id)
-	{
-		if (menuitemIds.ContainsKey(id))
-		{
-			if (menuitemIds[id] > 1)
-			{
-				menuitemIds[id]--;
-			}
-			else
-			{
-				menuitemIds.Remove(id);
-			}
-		}
-		localStorage.SetItem<Dictionary<int, int>>("MenuItemIds", menuitemIds);
-		_navigationManager.NavigateTo(_navigationManager.Uri, forceLoad: true);
-	}
-
-
-
 	// allergien, bestellungsposition, kunde, menuitem, menuitemkategorie, menuitemueberkategorie, rabatt
+
 	private List<Allergie> allergien = new List<Allergie>();
 	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
 	private List<Kunde> kunden = new List<Kunde>();
@@ -171,13 +115,11 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		// get data from localstorage
 		if (localStorage.GetItem<Dictionary<int, int>>("MenuItemIds") != null)
 		{
 			menuitemIds = localStorage.GetItem<Dictionary<int, int>>("MenuItemIds");
 		}
 
-		// get data from api
 		allergien = await Http.GetFromJsonAsync<List<Allergie>>("https://localhost:7076/api/allergien");
 		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
@@ -186,19 +128,6 @@
 		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/Menuitemueberkategories");
 		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
 
-
-		// calculate the sum of all menuitems
-		summe = 0;
-		foreach (var item in menuitemIds)
-		{
-			foreach (var item2 in menuitems)
-			{
-				if (item.Key == item2.IdmenuItem)
-				{
-					summe += item2.Preis * item.Value;
-				}
-			}
-		}
 	}
 
 	public class Allergie
@@ -246,7 +175,7 @@
 
 		public string? Zusatzinformation { get; set; }
 
-		public decimal Preis { get; set; }
+		public decimal? Preis { get; set; }
 
 		public int MenuItemKategorieIdmenuItemKategorie { get; set; }
 
@@ -290,4 +219,11 @@
 
 		public virtual ICollection<Bestellungsposition> Bestellungspositions { get; set; } = new List<Bestellungsposition>();
 	}
+
+
+
+
+
+
+
 }
