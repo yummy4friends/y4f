@@ -6,7 +6,7 @@ Yummy4Friends ist eine benutzerfreundliche und visuell ansprechende Webapp zur O
 
 ## Description (English)
 
-Yummy4Friends is a user friendly and visually appealing WebApp for ordering food or other things online. Food or other stuff get dynamically fetched from a customer and food database while also taking into account special requests. To attract customers one can also offer limeted time sales/coupons, ordering in advance as well as being able to choosing their preferred pickup time.  
+Yummy4Friends is a user-friendly and visually appealing WebApp for ordering food or other things online. Food or other stuff gets dynamically fetched from a customer and food database while also taking into account special requests. To attract customers, one can also offer limited-time sales and coupons, order in advance, and have the option to choose the preferred pickup time.  
 
 ## Tech Stack
 
