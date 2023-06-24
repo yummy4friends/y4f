@@ -25,6 +25,9 @@ public partial class WebApiContext : DbContext
 	public virtual DbSet<Menuitemueberkategorie> Menuitemueberkategories { get; set; }
 
 	public virtual DbSet<Rabatt> Rabatts { get; set; }
+	public virtual DbSet<MenuitemHasAllergie> MenuitemHasAllergie { get; set; }
+
+	public virtual DbSet<Admin> Admins { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -144,32 +147,6 @@ public partial class WebApiContext : DbContext
 				.HasForeignKey(d => d.MenuItemKategorieIdmenuItemKategorie)
 				.OnDelete(DeleteBehavior.ClientSetNull)
 				.HasConstraintName("fk_MenuItem_MenuItemKategorie1");
-
-			//entity.HasMany(d => d.AllergieIdallergies).WithMany(p => p.MenuItemIdmenuItems)
-			//	.UsingEntity<Dictionary<string, object>>(
-			//		"MenuitemHasAllergie",
-			//		r => r.HasOne<Allergie>().WithMany()
-			//			.HasForeignKey("AllergieIdallergie")
-			//			.OnDelete(DeleteBehavior.ClientSetNull)
-			//			.HasConstraintName("fk_MenuItem_has_Allergie_Allergie1"),
-			//		l => l.HasOne<Menuitem>().WithMany()
-			//			.HasForeignKey("MenuItemIdmenuItem")
-			//			.OnDelete(DeleteBehavior.ClientSetNull)
-			//			.HasConstraintName("fk_MenuItem_has_Allergie_MenuItem1"),
-			//		j =>
-			//		{
-			//			j.HasKey("MenuItemIdmenuItem", "AllergieIdallergie")
-			//				.HasName("PRIMARY")
-			//				.HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-			//			j.ToTable("menuitem_has_allergie");
-			//			j.HasIndex(new[] { "AllergieIdallergie" }, "fk_MenuItem_has_Allergie_Allergie1");
-			//			j.IndexerProperty<int>("MenuItemIdmenuItem")
-			//				.HasColumnType("int(11)")
-			//				.HasColumnName("MenuItem_IDMenuItem");
-			//			j.IndexerProperty<int>("AllergieIdallergie")
-			//				.HasColumnType("int(11)")
-			//				.HasColumnName("Allergie_IDAllergie");
-			//		});
 		});
 
 		modelBuilder.Entity<Menuitemkategorie>(entity =>
@@ -223,17 +200,17 @@ public partial class WebApiContext : DbContext
 			entity.Property(e => e.Prozent).HasPrecision(8, 2);
 		});
 
-		//modelBuilder.Entity<Admin>(entity =>
-		//{
-		//	entity.HasKey(e => e.Id).HasName("PRIMARY");
-		//	entity.ToTable("admin");
-		//	entity.Property(e => e.Id)
-		//		.ValueGeneratedNever()
-		//		.HasColumnType("int(11)")
-		//		.HasColumnName("Id");
-		//	entity.Property(e => e.Username).HasMaxLength(100);
-		//	entity.Property(e => e.Password).HasMaxLength(100);
-		//});
+		modelBuilder.Entity<Admin>(entity =>
+		{
+			entity.HasKey(e => e.Id).HasName("PRIMARY");
+			entity.ToTable("admin");
+			entity.Property(e => e.Id)
+				.ValueGeneratedNever()
+				.HasColumnType("int(11)")
+				.HasColumnName("Id");
+			entity.Property(e => e.Username).HasMaxLength(100);
+			entity.Property(e => e.Password).HasMaxLength(100);
+		});
 
 		//modelBuilder.Entity<BestellungspositionHasMenuitem>(entity =>
 		//{
@@ -262,5 +239,5 @@ public partial class WebApiContext : DbContext
 
 	partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-	public DbSet<WebApi.Models.MenuitemHasAllergie> MenuitemHasAllergie { get; set; } = default!;
 }
+
