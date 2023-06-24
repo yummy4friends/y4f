@@ -6,14 +6,17 @@
 
 
 <body style='--blazor-load-percentage: 100%; --blazor-load-percentage-text: "100%"; background-color:#C7FFD5;'>
-    <div class="container col-lg-6 col-md-9 col-sm-12 d-flex flex-column " id="content">
+    
+    <div class="container col-lg-6 col-md-9 col-sm-12 d-flex flex-column " id="content" style=" padding-left:10%; padding-right:10%;">
         <center><h1>Herzlich Willkommen!</h1></center>
 
         <img src="assets/Logo_new.png" class="img" title="logo image">
 
-        <form action="Speisekarte">
-            <input type="submit" value="Zur Speisekarte" class="btn" />
-      </form>
+        <button type="submit" id="button1" class="btn">QR-Code einscannen</button>
+
+        <input type="text" class="form-control" id="qrcode" placeholder="Zugangscode eintragen" name="qrcode">
+
+        <button type="submit" id="button1" class="btn">Bestätigen</button>
     </div>
 
 </body>
