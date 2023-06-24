@@ -1,29 +1,105 @@
 ﻿@page "/Yummy-Punkte"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 
 <body>
-    <div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
-        <h4><b>Ihre Yummy-Punkte</b></h4>
-        
-        <div class="img" >
-            @for(int i = 0; i < 10; i++)
-            {
-                <img src="assets/White-Circle.png ">
-            }
-            <br>
-            </div>
-        
-            <p class="text">Bei einem Mindestbestellwert von 8€ erhalten Sie ein Yummy-Punkt. Ab der 10ten Bestellung gibt es einen Rabatt zu Ihrer nächsten Bestellung.</p>
-        
-        <div class="button">
-            <form id="button1" action="/">
-                <input type="submit" value="Zurück" class="btn">
-            </form>
-        </div>
+	<div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+		<h4><b>Ihre Yummy-Punkte</b></h4>
 
-    </div>
+		<div class="img">
+			@for (int i = 0; i < 10; i++)
+			{
+				@*if kunde hat treuepunkte*@
+				@if (kunde.Treuepunkte > i)
+				{
+					<img src="assets/Point-Circle.png ">
+				}
+				else
+				{
+					<img src="assets/White-Circle.png ">
+				}
+			}
+			<br>
+		</div>
 
+		<p class="text">Bei einem Mindestbestellwert von 8€ erhalten Sie ein Yummy-Punkt. Ab der 10ten Bestellung gibt es einen Rabatt zu Ihrer nächsten Bestellung.</p>
+		<p class="text">Aktueller Rabatt: @rabatt.Prozent %</p>
+
+		<div class="button">
+			<form id="button1" action="/">
+				<input type="submit" value="Zurück" class="btn">
+			</form>
+			@*reset button to set the treuepunkte to null*@
+			<button class="btn btn-danger" @onclick="@(()=>resetTreuepunkte())">Yummy-Punkte einlösen</button>
+		</div>
+
+	</div>
 </body>
+
 @code {
 
-    
+	// allergien, bestellungsposition, kunde, menuitem, menuitemkategorie, menuitemueberkategorie, rabatt
+
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
+
+	private List<Rabatt> rabatte = new List<Rabatt>();
+	private Rabatt rabatt = new Rabatt();
+
+
+	public void resetTreuepunkte()
+	{
+		if (kunde.Treuepunkte == 10)
+		{
+			kunde.Treuepunkte = 0;
+			// API change treupunkte to 0 if kunde has 10 treuepunkte
+			Http.PutAsJsonAsync("https://localhost:7076/api/kunden/" + kunde.Idkunde, kunde);
+		}
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
+
+		kunde = kunden[0];
+
+		// get the most recent rabatt, that are still valid (GueltigkeitBis)
+		// if there is no rabatt, set the rabatt to null
+		if (rabatte.Count == 0)
+		{
+			rabatt = null;
+		}
+		else
+		{
+			for (int i = 0; i < rabatte.Count; i++)
+			{
+				if (rabatte[i].GueltigkeitBis > DateTime.Now)
+				{
+					rabatt = rabatte[i];
+				}
+			}
+		}
+		//rabatt = rabatte[rabatte.Count - 1];
+
+
+	}
+
+	public class Kunde
+	{
+		public int Idkunde { get; set; }
+		public string Code { get; set; }
+		public int Treuepunkte { get; set; }
+	}
+	public class Rabatt
+	{
+		public int Idrabatt { get; set; }
+
+		public decimal Prozent { get; set; }
+
+		public DateTime GueltigkeitVon { get; set; }
+
+		public DateTime GueltigkeitBis { get; set; }
+
+	}
 }
