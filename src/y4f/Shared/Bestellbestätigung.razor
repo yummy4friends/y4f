@@ -29,8 +29,7 @@
 		<div class="button">
 			<br><br><br><br>
 			<form id="button1" action="/">
-				<input type="submit" value="Bestellungsübersicht" class="btn">
-				@*<input type="submit" value="Zur Startseite" class="btn">*@
+				<input type="submit" value="Bestellungsübersicht" class="btn" @onclick="BestellungsUuebersicht"/>
 			</form>
 		</div>
 
@@ -60,17 +59,11 @@
 
 	public decimal summe;
 
-	public void Vorbestellen()
+
+
+	public void BestellungsUuebersicht()
 	{
-		// set rabattEinloesen
-		if (rabattEinloesen)
-			localStorage.SetItem("RabattEinloesen", true);
-		else
-			localStorage.SetItem("RabattEinloesen", false);
-
-		_navigationManager.NavigateTo("/Bestellbestätigung");
-
-
+		_navigationManager.NavigateTo("/Kontoverwaltung");
 	}
 
 	// allergien, bestellungsposition, kunde, menuitem, menuitemkategorie, menuitemueberkategorie, rabatt
@@ -161,7 +154,7 @@
 
 		public int KundeIdkunde { get; set; }
 
-		public int RabattIdrabatt { get; set; }
+		public int? RabattIdrabatt { get; set; }
 
 		public virtual Kunde KundeIdkundeNavigation { get; set; } = null!;
 

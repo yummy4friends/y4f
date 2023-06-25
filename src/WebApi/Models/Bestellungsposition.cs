@@ -13,7 +13,7 @@ public partial class Bestellungsposition
 
 	public int KundeIdkunde { get; set; }
 
-	public int RabattIdrabatt { get; set; }
+	public int? RabattIdrabatt { get; set; }
 
 	public virtual Kunde? KundeIdkundeNavigation { get; set; } = null!;
 
