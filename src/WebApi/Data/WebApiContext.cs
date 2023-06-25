@@ -29,7 +29,7 @@ public partial class WebApiContext : DbContext
 
 	public virtual DbSet<Admin> Admins { get; set; }
 
-	//public virtual DbSet<BestellungspositionHasMenuitem> BestellungspositionHasMenuitem { get; set; }
+	public virtual DbSet<BestellungspositionHasMenuitem> BestellungspositionHasMenuitem { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -83,31 +83,31 @@ public partial class WebApiContext : DbContext
 				.OnDelete(DeleteBehavior.ClientSetNull)
 				.HasConstraintName("fk_Bestellungsposition_Rabatt1");
 
-			entity.HasMany(d => d.MenuItemIdmenuItems).WithMany(p => p.BestellungspositionIdbestellungs)
-				.UsingEntity<Dictionary<string, object>>(
-					"BestellungspositionHasMenuitem",
-					r => r.HasOne<Menuitem>().WithMany()
-						.HasForeignKey("MenuItemIdmenuItem")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("fk_Bestellungsposition_has_MenuItem_MenuItem1"),
-					l => l.HasOne<Bestellungsposition>().WithMany()
-						.HasForeignKey("BestellungspositionIdbestellung")
-						.OnDelete(DeleteBehavior.ClientSetNull)
-						.HasConstraintName("fk_Bestellungsposition_has_MenuItem_Bestellungsposition1"),
-					j =>
-					{
-						j.HasKey("BestellungspositionIdbestellung", "MenuItemIdmenuItem")
-							.HasName("PRIMARY")
-							.HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-						j.ToTable("bestellungsposition_has_menuitem");
-						j.HasIndex(new[] { "MenuItemIdmenuItem" }, "fk_Bestellungsposition_has_MenuItem_MenuItem1");
-						j.IndexerProperty<int>("BestellungspositionIdbestellung")
-							.HasColumnType("int(11)")
-							.HasColumnName("Bestellungsposition_IDBestellung");
-						j.IndexerProperty<int>("MenuItemIdmenuItem")
-							.HasColumnType("int(11)")
-							.HasColumnName("MenuItem_IDMenuItem");
-					});
+			//entity.HasMany(d => d.MenuItemIdmenuItems).WithMany(p => p.BestellungspositionIdbestellungs)
+			//	.UsingEntity<Dictionary<string, object>>(
+			//		"BestellungspositionHasMenuitem",
+			//		r => r.HasOne<Menuitem>().WithMany()
+			//			.HasForeignKey("MenuItemIdmenuItem")
+			//			.OnDelete(DeleteBehavior.ClientSetNull)
+			//			.HasConstraintName("fk_Bestellungsposition_has_MenuItem_MenuItem1"),
+			//		l => l.HasOne<Bestellungsposition>().WithMany()
+			//			.HasForeignKey("BestellungspositionIdbestellung")
+			//			.OnDelete(DeleteBehavior.ClientSetNull)
+			//			.HasConstraintName("fk_Bestellungsposition_has_MenuItem_Bestellungsposition1"),
+			//		j =>
+			//		{
+			//			j.HasKey("BestellungspositionIdbestellung", "MenuItemIdmenuItem")
+			//				.HasName("PRIMARY")
+			//				.HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+			//			j.ToTable("bestellungsposition_has_menuitem");
+			//			j.HasIndex(new[] { "MenuItemIdmenuItem" }, "fk_Bestellungsposition_has_MenuItem_MenuItem1");
+			//			j.IndexerProperty<int>("BestellungspositionIdbestellung")
+			//				.HasColumnType("int(11)")
+			//				.HasColumnName("Bestellungsposition_IDBestellung");
+			//			j.IndexerProperty<int>("MenuItemIdmenuItem")
+			//				.HasColumnType("int(11)")
+			//				.HasColumnName("MenuItem_IDMenuItem");
+			//		});
 		});
 
 		modelBuilder.Entity<Kunde>(entity =>
@@ -214,16 +214,16 @@ public partial class WebApiContext : DbContext
 			entity.Property(e => e.Password).HasMaxLength(100);
 		});
 
-		//modelBuilder.Entity<BestellungspositionHasMenuitem>(entity =>
-		//{
-		//	entity.HasKey(e => new { e.Bestellungsposition_IDBestellung, e. })
-		//		.HasName("PRIMARY");
+		modelBuilder.Entity<BestellungspositionHasMenuitem>(entity =>
+		{
+			entity.HasKey(e => new { e.Bestellungsposition_IDBestellung, e.MenuItem_IDMenuItem })
+				.HasName("PRIMARY");
 
-		//	entity.ToTable("bestellungsposition_has_menuitem");
+			entity.ToTable("bestellungsposition_has_menuitem");
 
-		//	entity.Property(e => e.BestellungspositionId).HasColumnType("int(11)");
-		//	entity.Property(e => e.MenuitemId).HasColumnType("int(11)");
-		//});
+			entity.Property(e => e.Bestellungsposition_IDBestellung).HasColumnType("int(11)").HasColumnName("Bestellungsposition_IDBestellung");
+			entity.Property(e => e.MenuItem_IDMenuItem).HasColumnType("int(11)").HasColumnName("MenuItem_IDMenuItem");
+		});
 
 		modelBuilder.Entity<MenuitemHasAllergie>(entity =>
 		{
