@@ -1,131 +1,110 @@
 ﻿@page "/BestelluebersichtD-Chefin"
 @layout ChefinLayout
 
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
+
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12 col-lg-6">
-            @*Tabelle Ihre Bestellung*@
-            <div class="tbl-container">
-                <table class="table bdr">
-                    <thead class="bg_green">
-                        <tr>
-                            <td>Ihre Bestellung</td>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg_lightgreen" style="background-color:white;">
-                        <tr>
-                            <td class="br" style="padding-top:20px; padding-bottom:0px; border-bottom-width: 0px;">
-                                1 Nudel mit Hühnerfleisch (groß)
-                                <div style="font-size:0.7rem;padding-left:15px;">mit Knoblauchsoße</div>
-                            </td>
-                            <td class="d-flex justify-content-center align-items-center" style="padding-top:20px; padding-bottom:0px; border-style:hidden;">9,10€</td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;">1 Coca Cola</td>
-                            <td class="d-flex justify-content-center align-items-center" style="padding-top:0px; border-style:hidden;">2,50€</td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
-                        </tr>
-                        <tr>
-                            <td class="br" style=" padding-top:0px; border-bottom-width: 0px;"></td>
-                            <td class="d-flex justify-content-center align-items-center" style="border-bottom-width: 0px; border-style:hidden;"></td>
-                        </tr>
-                    </tbody>
-                    <tfoot class="bg_lightgreen">
-                        <tr style="border-top:solid 1px black; background-color:white;">
-                            <th class="" style="text-align:right;">Summe</th>
-                            <td class="d-flex justify-content-center align-items-center">11,60€</td>
-                        </tr>
-                    </tfoot>
-                </table>
+	<div class="row">
+		<div class="col-sm-12 col-lg-6">
+			@*Tabelle Ihre Bestellung*@
+			<div class="tbl-container">
+				<table class="table bdr">
+					<thead class="bg_green">
+						<tr>
+							<td>Ihre Bestellung (@day.@month.@year)</td>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody class="bg_lightgreen" style="background-color:white;">
+						@if (menuitemIds.Count == 0)
+						{
+							<div class="card-body">
+								<h5 class="card-title" style="font-size:10pt; margin-bottom:0px;">Warenkorb ist leer</h5>
+							</div>
+						}
+						else
+						{
+							@foreach (var item in menuitemIds)
+							{
+								@foreach (var item2 in menuitems)
+								{
+									@if (item.Key == item2.IdmenuItem)
+									{
+										<tr>
 
-            </div>
+											<td class="br" style="padding-top:20px; padding-bottom:0px; border-bottom-width: 0px;">
+												@item.Value x
+												@item2.Bezeichnung
+												<div style="font-size:0.7rem;padding-left:15px;">@item2.Zusatzinformation</div>
+											</td>
+											<td class="d-flex justify-content-center align-items-center" style="padding-top:20px; border-bottom-width:0px;">@(item2.Preis * item.Value)€</td>
+										</tr>
+									}
+								}
 
-        </div>
-                <div class="col-sm-12 col-lg-6">
-            
-                        <div class="d-flex flex-column align-items-center  ">
-                            <div class="tbl-container  w-100">
-                                <!-- <== overflow: hidden applied to parent -->
-                    <table class="table table-bordered bdr " style=" border-radius: 50px; margin-left: 50px;">
-                                    <thead class="bg_green">
-                                        <tr>
-                                            <td class="d-flex justify-content-center align-items-center" style="border-bottom:0px;">
-                                                <p>Abholzeit</p>
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody >
-                                        <tr>
-                                            <td class="d-flex justify-content-center align-items-center" style="padding-top:0px; background-color:white;">
-                                            <div style="margin:20px;">
-                                                    <div class="d-flex justify-content-center align-items-center" >
-                                                        <p>12:30 Uhr</p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+							}
+						}
+					</tbody>
+					<tfoot class="bg_lightgreen">
+						<tr style="border-top:solid 1px black; background-color:white;">
+							<th class="" style="text-align:right;">Summe</th>
+							<td class="d-flex justify-content-center align-items-center">
+								@summe€ &nbsp;
+								@if (rabattEinloesen)
+								{
+									<span style="color:green;">(- @rabatt.Prozent%)</span>
+								}
+							</td>
+						</tr>
+					</tfoot>
+				</table>
 
-                    <div class="d-flex flex-column" style="align-items: center;  margin-left: 100px;">
-                        <button class="btn_back w-75">Zurück</button>
-                        <button class="btn btn-danger w-75" style="border-radius: 50px; padding-top:12px; padding-bottom:12px; color:black;">Bestellung auflösen</button>
-                        <button class="btn_forward w-75">Bestellung abschließen</button>
-                    </div>
+			</div>
 
-                </div>
-            </div>
-        </div>
-    </div>
+		</div>
+		<div class="col-sm-12 col-lg-6">
 
-                @*Buttons*@
-                
-            </div>
-        
+			<div class="d-flex flex-column align-items-center  ">
+				<div class="tbl-container  w-100">
+					<!-- <== overflow: hidden applied to parent -->
+					<table class="table table-bordered bdr " style=" border-radius: 50px; margin-left: 50px;">
+						<thead class="bg_green">
+							<tr>
+								<td class="d-flex justify-content-center align-items-center" style="border-bottom:0px;">
+									<p>Abholzeit</p>
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="d-flex justify-content-center align-items-center" style="padding-top:0px; background-color:white;">
+									<div style="margin:20px;">
+										<div class="d-flex justify-content-center align-items-center">
+											<p>@hour:@minute Uhr (@day.@month.@year)</p>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="d-flex flex-column" style="align-items: center;  margin-left: 100px;">
+						@*<button class="btn_back w-75">Zurück</button>*@
+						@*<button class="btn btn-danger w-75" style="border-radius: 50px; padding-top:12px; padding-bottom:12px; color:black;">Bestellung auflösen</button>*@
+						@*<button class="btn_forward w-75">Bestellung abschließen</button>*@
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@*Buttons*@
+
+</div>
+
 
 @*<div class="h-100">
                 @*Essen Abholen?
@@ -136,4 +115,150 @@
 </div>*@
 @code {
 
+	public int hour;
+	public int minute;
+	public int day;
+	public int month;
+	public int year;
+
+
+	public decimal summe;
+	public Dictionary<int, int> menuitemIds = new Dictionary<int, int>();
+	private Rabatt rabatt = new Rabatt();
+	private bool rabattEinloesen;
+
+	public decimal rabattGutschrift;
+
+
+	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
+	private List<Menuitem> menuitems = new List<Menuitem>();
+	private List<Rabatt> rabatte = new List<Rabatt>();
+	private List<BestellungspositionHasMenuitem> bestellungspositionHasMenuitems = new List<BestellungspositionHasMenuitem>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		// get data from api
+		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+		menuitems = await Http.GetFromJsonAsync<List<Menuitem>>("https://localhost:7076/api/Menuitems");
+		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
+		bestellungspositionHasMenuitems = await Http.GetFromJsonAsync<List<BestellungspositionHasMenuitem>>("https://localhost:7076/api/BestellungspositionHasMenuitems");
+
+
+		// get kunde from localstorage
+		int kundeId = localStorage.GetItem<int>("KundeId");
+		kunde = kunden.Where(x => x.Idkunde == kundeId).FirstOrDefault();
+
+		// get all menuitemIds from bestellungspositions with the last date
+		foreach (var bestellungsposition in bestellungspositions)
+		{
+			if (bestellungsposition.KundeIdkunde == kunde.Idkunde)
+			{
+				if (bestellungsposition.Datum == bestellungspositions.Max(x => x.Datum))
+				{
+
+					// get hour and minute from datetime of last bestellungsposition
+					hour = bestellungsposition.Datum.Hour;
+					minute = bestellungsposition.Datum.Minute;
+					day = bestellungsposition.Datum.Day;
+					month = bestellungsposition.Datum.Month;
+					year = bestellungsposition.Datum.Year;
+
+					//if rabatt is used
+					if (bestellungsposition.RabattIdrabatt != null)
+					{
+						rabattEinloesen = true;
+						foreach (var rabatt in rabatte)
+						{
+							if (rabatt.Idrabatt == bestellungsposition.RabattIdrabatt)
+							{
+								this.rabatt = rabatt;
+							}
+						}
+					}
+
+					foreach (var bestellungspositionHasMenuitem in bestellungspositionHasMenuitems)
+					{
+						if (bestellungspositionHasMenuitem.Bestellungsposition_IDBestellung == bestellungsposition.Idbestellung)
+						{
+							menuitemIds.Add(bestellungspositionHasMenuitem.MenuItem_IDMenuItem, bestellungsposition.Menge);
+						}
+					}
+				}
+			}
+		}
+		// get summe
+		foreach (var menuitem in menuitems)
+		{
+			foreach (var menuitemId in menuitemIds)
+			{
+				if (menuitem.IdmenuItem == menuitemId.Key)
+				{
+					summe += menuitem.Preis * menuitemId.Value;
+				}
+			}
+		}
+		//if rabatt is used calculate new summe
+		if (rabattEinloesen)
+		{
+			rabattGutschrift = (summe * rabatt.Prozent / 100);
+			summe = summe - rabattGutschrift;
+			summe = Math.Round(summe, 2);
+		}
+	}
+
+	public class Bestellungsposition
+	{
+		public int Idbestellung { get; set; }
+
+		public int Menge { get; set; }
+
+		public DateTime Datum { get; set; }
+
+		public int KundeIdkunde { get; set; }
+
+		public int? RabattIdrabatt { get; set; }
+
+	}
+	public class Kunde
+	{
+		public int Idkunde { get; set; }
+
+		public string? Code { get; set; }
+
+		public int? Treuepunkte { get; set; }
+	}
+
+	public class Menuitem
+	{
+		public int IdmenuItem { get; set; }
+
+		public string? Bezeichnung { get; set; }
+
+		public string? Zusatzinformation { get; set; }
+
+		public decimal Preis { get; set; }
+
+
+	}
+	public class Rabatt
+	{
+		public int Idrabatt { get; set; }
+
+		public decimal Prozent { get; set; }
+
+		public DateTime? GueltigkeitVon { get; set; }
+
+		public DateTime? GueltigkeitBis { get; set; }
+
+	}
+
+	public class BestellungspositionHasMenuitem
+	{
+		public int Bestellungsposition_IDBestellung { get; set; }
+		public int MenuItem_IDMenuItem { get; set; }
+	}
 }
+
