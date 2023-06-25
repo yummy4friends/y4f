@@ -1,5 +1,37 @@
 @page "/yummypoints"
 
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
+
+
+@code {
+    private List<Kunde> kunden = new List<Kunde>();
+    private Kunde kunde = new Kunde();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // kunde login start
+        kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+        if (localStorage.ContainKey("kunde"))
+            kunde = localStorage.GetItem<Kunde>("kunde");
+        else
+            _navigationManager.NavigateTo("/");
+
+        if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+            _navigationManager.NavigateTo("/");
+        // kunde login end
+
+    }
+
+    public class Kunde
+    {
+        int Idkunde { get; set; }
+        public string Code { get; set; }
+        public int Treuepunkte { get; set; }
+    }
+}
 <body style='--blazor-load-percentage: 100%; --blazor-load-percentage-text: "100%";'>
     <div class="d-flex justify-content-center">
         

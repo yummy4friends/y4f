@@ -1,20 +1,56 @@
-﻿ @page "/"
- @layout Startseite
+﻿@page "/"
+@layout Startseite
 
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
 
 <PageTitle>Yummy4Friends</PageTitle>
 
-
 <body style='--blazor-load-percentage: 100%; --blazor-load-percentage-text: "100%"; background-color:#C7FFD5;'>
-    <div class="container col-lg-6 col-md-9 col-sm-12 d-flex flex-column " id="content">
-        <center><h1>Herzlich Willkommen!</h1></center>
 
-        <img src="assets/Logo_new.png" class="img" title="logo image">
+	<div class="container col-lg-6 col-md-9 col-sm-12 d-flex flex-column " id="content" style=" padding-left:10%; padding-right:10%;">
+		<center><h1>Herzlich Willkommen!</h1></center>
 
-        <form action="Speisekarte">
-            <input type="submit" value="Zur Speisekarte" class="btn" />
-      </form>
-    </div>
+		<img src="assets/Logo_new.png" class="img" title="logo image">
 
+		<input type="text" class="form-control" id="qrcode" placeholder="Zugangscode eintragen" name="qrcode" @bind-value="@qrcodeValue">
+
+		<button type="submit" id="button1" class="btn" @onclick="@(() => CheckCode())">Bestätigen</button>
+	</div>
 </body>
+
+@code {
+	private string qrcodeValue;
+	private List<Kunde> kunden = new List<Kunde>();
+
+	public void CheckCode()
+	{
+		foreach (var kunde in kunden)
+		{
+			if (kunde.Code == qrcodeValue)
+			{
+				localStorage.SetItem("kunde", kunde);
+				_navigationManager.NavigateTo("/speisekarte");
+				break;
+			}
+		}
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+	}
+
+	public class Kunde
+	{
+		public int Idkunde { get; set; }
+		public string Code { get; set; }
+		public int Treuepunkte { get; set; }
+	}
+
+
+}
+
+
 

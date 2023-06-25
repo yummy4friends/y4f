@@ -8,6 +8,10 @@
 <br>
 
 
+@*log out Button *@
+<div class="container mt-auto">
+	<button class="btn" type="button" onclick="@Logout" id="button1">@button1</button>
+</div>
 
 <div class="container mt-auto">
 	<h4>AccountID: @kunde.Code</h4>
@@ -125,8 +129,10 @@
 
 
 
-
 @code {
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
+
 	bool changeButtonBool { get; set; } = true;
 
 	string button1 => changeButtonBool ? "Konto deaktivieren" : "Konto aktivieren";
@@ -135,6 +141,12 @@
 	{
 		//TODO Datenbankaktualisierung
 		changeButtonBool = !changeButtonBool;
+	}
+
+	public void Logout()
+	{
+		localStorage.Clear();
+		_navigationManager.NavigateTo("/");
 	}
 
 	public int hour;
@@ -153,14 +165,24 @@
 
 
 	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
-	private List<Kunde> kunden = new List<Kunde>();
-	private Kunde kunde = new Kunde();
 	private List<Menuitem> menuitems = new List<Menuitem>();
 	private List<Rabatt> rabatte = new List<Rabatt>();
 	private List<BestellungspositionHasMenuitem> bestellungspositionHasMenuitems = new List<BestellungspositionHasMenuitem>();
 
 	protected override async Task OnInitializedAsync()
 	{
+		// kunde login start
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		if (localStorage.ContainKey("kunde"))
+			kunde = localStorage.GetItem<Kunde>("kunde");
+		else
+			_navigationManager.NavigateTo("/");
+
+		if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+			_navigationManager.NavigateTo("/");
+		// kunde login end
+
 		// get data from api
 		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");

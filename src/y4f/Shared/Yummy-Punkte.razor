@@ -1,6 +1,7 @@
 ﻿@page "/Yummy-Punkte"
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
 
 <body>
 	<div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
@@ -59,6 +60,18 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		// kunde login start
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		if (localStorage.ContainKey("kunde"))
+			kunde = localStorage.GetItem<Kunde>("kunde");
+		else
+			_navigationManager.NavigateTo("/");
+
+		if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+			_navigationManager.NavigateTo("/");
+		// kunde login end
+
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
 		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
 

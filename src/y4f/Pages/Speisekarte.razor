@@ -1,6 +1,9 @@
 ﻿@page "/Speisekarte"
 
 @inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
+
 
 <h1>Speisekarte</h1>
 <div class="row justify-content-center">
@@ -70,11 +73,24 @@
 
 
 @code {
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
+
 	private List<Menuitemkategorie> menuitemkategories = new List<Menuitemkategorie>();
 	private List<Menuitemueberkategorie> menuitemueberkategories = new List<Menuitemueberkategorie>();
 
 	protected override async Task OnInitializedAsync()
 	{
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		if (localStorage.ContainKey("kunde"))
+			kunde = localStorage.GetItem<Kunde>("kunde");
+		else
+			_navigationManager.NavigateTo("/");
+
+		if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+			_navigationManager.NavigateTo("/");
+
 		menuitemkategories = await Http.GetFromJsonAsync<List<Menuitemkategorie>>("https://localhost:7076/api/MenuItemKategories");
 		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/MenuItemUeberkategories");
 	}
@@ -97,4 +113,10 @@
 	}
 
 
+	public class Kunde
+	{
+		public int Idkunde { get; set; }
+		public string Code { get; set; }
+		public int Treuepunkte { get; set; }
+	}
 }

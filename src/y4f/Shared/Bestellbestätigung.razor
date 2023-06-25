@@ -75,6 +75,18 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		// kunde login start
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		if (localStorage.ContainKey("kunde"))
+			kunde = localStorage.GetItem<Kunde>("kunde");
+		else
+			_navigationManager.NavigateTo("/");
+
+		if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+			_navigationManager.NavigateTo("/");
+		// kunde login end
+
 		// get data from api
 		allergien = await Http.GetFromJsonAsync<List<Allergie>>("https://localhost:7076/api/allergien");
 		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
