@@ -190,12 +190,8 @@
 		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
 		bestellungspositionHasMenuitems = await Http.GetFromJsonAsync<List<BestellungspositionHasMenuitem>>("https://localhost:7076/api/BestellungspositionHasMenuitems");
 
-
-		// use kudnde with id 2
-		kunde = kunden[1];
-
-
-
+		// get kunde from local storage
+		kunde = localStorage.GetItem<Kunde>("kunde");
 
 		// get all menuitemIds from bestellungspositions with the last date
 		foreach (Bestellungsposition bestellungsposition in bestellungspositions)
