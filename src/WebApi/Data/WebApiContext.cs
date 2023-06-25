@@ -29,6 +29,8 @@ public partial class WebApiContext : DbContext
 
 	public virtual DbSet<Admin> Admins { get; set; }
 
+	//public virtual DbSet<BestellungspositionHasMenuitem> BestellungspositionHasMenuitem { get; set; }
+
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		modelBuilder
@@ -214,7 +216,7 @@ public partial class WebApiContext : DbContext
 
 		//modelBuilder.Entity<BestellungspositionHasMenuitem>(entity =>
 		//{
-		//	entity.HasKey(e => new { e.BestellungspositionId, e.MenuitemId })
+		//	entity.HasKey(e => new { e.Bestellungsposition_IDBestellung, e. })
 		//		.HasName("PRIMARY");
 
 		//	entity.ToTable("bestellungsposition_has_menuitem");
