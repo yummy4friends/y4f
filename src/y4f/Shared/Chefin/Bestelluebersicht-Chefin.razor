@@ -28,29 +28,29 @@
 								@*get the last highes datum from Datum*@
 								if (firstTime)
 								{
-									if (bestellungsposition.Datum == bestellungspositions.Max(x => x.Datum))
-									{
-										@*get hour and minute from datetime of last bestellungsposition*@
-										hour = bestellungsposition.Datum.Hour;
-										minute = bestellungsposition.Datum.Minute;
-										day = bestellungsposition.Datum.Day;
-										month = bestellungsposition.Datum.Month;
-										year = bestellungsposition.Datum.Year;
+									@*if (bestellungsposition.Datum == bestellungspositions.Max(x => x.Datum))*@
+									@*{*@
+									@*get hour and minute from datetime of last bestellungsposition*@
+									hour = bestellungsposition.Datum.Hour;
+									minute = bestellungsposition.Datum.Minute;
+									day = bestellungsposition.Datum.Day;
+									month = bestellungsposition.Datum.Month;
+									year = bestellungsposition.Datum.Year;
 
-										@*print kunde.code, hour and minute from last bestellungsposition*@
-										@*print only if date is higher than now datum *@
-										if (bestellungsposition.Datum > DateTime.Now)
-										{
-											<tr>
-												<td>
-													<p @onclick="@(()=>BDetail(@kunde.Idkunde))" class="mb-0 pb-0">
-														#@kunde.Code &nbsp;
-														@hour:@minute
-													</p>
-												</td>
-											</tr>
-										}
+									@*print kunde.code, hour and minute from last bestellungsposition*@
+									@*print only if date is higher than now datum *@
+									if (bestellungsposition.Datum > DateTime.Now)
+									{
+										<tr>
+											<td>
+												<p @onclick="@(()=>BDetail(@kunde.Idkunde))" class="mb-0 pb-0">
+													#@kunde.Code &nbsp;
+													@hour:@minute
+												</p>
+											</td>
+										</tr>
 									}
+									@*}*@
 									firstTime = false;
 								}
 							}
@@ -60,17 +60,17 @@
 			</table>
 		</div>
 		@*<div class="col-lg-3">
-			<p id="text" readonly>Abholzeit</p>
-			<br />
-			<form id="button" action="Bestelluebersicht">
-				<input type="submit" value="30 Min" class="btn">
-			</form>
-			<form id="button" action="Bestelluebersicht">
-				<input type="submit" value="45 Min" class="btn">
-			</form>
-			<form id="button" action="Bestelluebersicht">
-				<input type="submit" value="1 Std" class="btn">
-			</form>
+		<p id="text" readonly>Abholzeit</p>
+		<br />
+		<form id="button" action="Bestelluebersicht">
+		<input type="submit" value="30 Min" class="btn">
+		</form>
+		<form id="button" action="Bestelluebersicht">
+		<input type="submit" value="45 Min" class="btn">
+		</form>
+		<form id="button" action="Bestelluebersicht">
+		<input type="submit" value="1 Std" class="btn">
+		</form>
 
 		</div>*@
 	</div>

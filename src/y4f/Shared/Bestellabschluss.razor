@@ -83,10 +83,12 @@
 			Http.PutAsJsonAsync("https://localhost:7076/api/kunden/" + kunde.Idkunde, kunde);
 			summe = Math.Round(summe - (summe * rabatt.Prozent / 100), 2);
 			localStorage.SetItem("Summe", summe);
+			localStorage.SetItem("RabattEinloesen", true);
 		}
 		else
 		{
 			localStorage.SetItem("RabattEinloesen", false);
+			localStorage.SetItem("Summe", summe);
 		}
 
 		// add bestellung to API
@@ -167,7 +169,7 @@
 		bestellungspositionHasMenuitems = await Http.GetFromJsonAsync<List<BestellungspositionHasMenuitem>>("https://localhost:7076/api/BestellungspositionHasMenuitems");
 
 		// test use the first kunde
-		kunde = kunden[0];
+		kunde = kunden[1];
 
 		// get the most recent rabatt, that are still valid (GueltigkeitBis)
 		// if there is no rabatt, set the rabatt to null

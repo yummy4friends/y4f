@@ -62,7 +62,7 @@
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
 		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
 
-		kunde = kunden[0];
+		kunde = kunden[1];
 
 		// get the most recent rabatt, that are still valid (GueltigkeitBis)
 		// if there is no rabatt, set the rabatt to null

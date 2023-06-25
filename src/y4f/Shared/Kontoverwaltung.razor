@@ -64,7 +64,6 @@
 										</tr>
 									}
 								}
-
 							}
 						}
 					</tbody>
@@ -170,42 +169,43 @@
 		bestellungspositionHasMenuitems = await Http.GetFromJsonAsync<List<BestellungspositionHasMenuitem>>("https://localhost:7076/api/BestellungspositionHasMenuitems");
 
 
-		// use kudnde with id 1
-		kunde = kunden[0];
+		// use kudnde with id 2
+		kunde = kunden[1];
+
+
+
+
 		// get all menuitemIds from bestellungspositions with the last date
-		foreach (var bestellungsposition in bestellungspositions)
+		foreach (Bestellungsposition bestellungsposition in bestellungspositions)
 		{
 			if (bestellungsposition.KundeIdkunde == kunde.Idkunde)
 			{
-				if (bestellungsposition.Datum == bestellungspositions.Max(x => x.Datum))
+
+				// get hour and minute from datetime of last bestellungsposition
+				hour = bestellungsposition.Datum.Hour;
+				minute = bestellungsposition.Datum.Minute;
+				day = bestellungsposition.Datum.Day;
+				month = bestellungsposition.Datum.Month;
+				year = bestellungsposition.Datum.Year;
+
+				//if rabatt is used
+				if (bestellungsposition.RabattIdrabatt != null)
 				{
-
-					// get hour and minute from datetime of last bestellungsposition
-					hour = bestellungsposition.Datum.Hour;
-					minute = bestellungsposition.Datum.Minute;
-					day = bestellungsposition.Datum.Day;
-					month = bestellungsposition.Datum.Month;
-					year = bestellungsposition.Datum.Year;
-
-					//if rabatt is used
-					if (bestellungsposition.RabattIdrabatt != null)
+					rabattEinloesen = true;
+					foreach (var rabatt in rabatte)
 					{
-						rabattEinloesen = true;
-						foreach (var rabatt in rabatte)
+						if (rabatt.Idrabatt == bestellungsposition.RabattIdrabatt)
 						{
-							if (rabatt.Idrabatt == bestellungsposition.RabattIdrabatt)
-							{
-								this.rabatt = rabatt;
-							}
+							this.rabatt = rabatt;
 						}
 					}
+				}
 
-					foreach (var bestellungspositionHasMenuitem in bestellungspositionHasMenuitems)
+				foreach (var bestellungspositionHasMenuitem in bestellungspositionHasMenuitems)
+				{
+					if (bestellungspositionHasMenuitem.Bestellungsposition_IDBestellung == bestellungsposition.Idbestellung)
 					{
-						if (bestellungspositionHasMenuitem.Bestellungsposition_IDBestellung == bestellungsposition.Idbestellung)
-						{
-							menuitemIds.Add(bestellungspositionHasMenuitem.MenuItem_IDMenuItem, bestellungsposition.Menge);
-						}
+						menuitemIds.Add(bestellungspositionHasMenuitem.MenuItem_IDMenuItem, bestellungsposition.Menge);
 					}
 				}
 			}
