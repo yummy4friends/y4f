@@ -1,82 +1,173 @@
 ﻿@page "/Bestelluebersicht"
 @layout ChefinLayout
 
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
+
+@*// logout button*@
+<div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+	<button type="button" class="btn" @onclick="@Logout">Logout</button>
+</div>
 <div class="container d-flex flex-column">
-    <div class="row">
-        <div class="col-lg-8">
-            <br /><br />
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th colspan="2">Aktive Bestellungen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><a href="BDetail">#1234 &nbsp; 12:30</a></td>
-                        <td><a href="BDetail">#2345 &nbsp; 18:45</a></td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="BDetail">#3456 &nbsp; 13:00</a></td>
-                        <td><a href="BDetail">#4567 &nbsp; 19:00</a></td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="BDetail">#5678 &nbsp; 14:30</a></td>
-                        <td><a href="BDetail">#6789 &nbsp; 19:15</a></td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="BDetail">#4321 &nbsp; 15:15</a></td>
-                        <td><a href="BDetail">#5432 &nbsp; 19:15</a></td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="BDetail">#6543 &nbsp; 15:30</a></td>
-                        <td><a href="BDetail">#7654 &nbsp; 19:15</a></td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="BDetail">#7654 &nbsp; 15:30</a></td>
-                        <td>&nbsp;</td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="BDetail">#8765 &nbsp; 16:00</a></td>
-                        <td>&nbsp;</td>
-                        
-                    </tr>
-                    <tr>
-                        <td><a href="BDetail">#9876 &nbsp; 17:30</a></td>
-                        <td>&nbsp;</td>
-                        
-                    </tr>
-                    
+	<div class="row">
+		<div class="col-12">
+			<br /><br />
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Aktive Bestellungen  @day.@month.@year</th>
+					</tr>
+				</thead>
+				<tbody>
+					@*iterate all kunden*@
+					@foreach (var kunde in kunden)
+					{
+						bool firstTime = true;
 
+						@*if kunde has made a recent bestellungsposiotn from today and higher value than now, print it*@
+						@foreach (var bestellungsposition in bestellungspositions)
+						{
+							if (bestellungsposition.KundeIdkunde == kunde.Idkunde)
+							{
+								@*get the last highes datum from Datum*@
+								if (firstTime)
+								{
+									@*if (bestellungsposition.Datum == bestellungspositions.Max(x => x.Datum))*@
+									@*{*@
+									@*get hour and minute from datetime of last bestellungsposition*@
+									hour = bestellungsposition.Datum.Hour;
+									minute = bestellungsposition.Datum.Minute;
+									day = bestellungsposition.Datum.Day;
+									month = bestellungsposition.Datum.Month;
+									year = bestellungsposition.Datum.Year;
 
-                </tbody>
-            </table>
-        </div>
-        <div class="col-lg-3">
-            <p id="text"  readonly >Abholzeit</p>
-            <br /> 
-            <form id="button" action="Bestelluebersicht">
-                <input type="submit" value="30 Min" class="btn">
-            </form>
-            <form id="button" action="Bestelluebersicht">
-                <input type="submit" value="45 Min" class="btn">
-            </form>
-            <form id="button" action="Bestelluebersicht">
-                <input type="submit" value="1 Std" class="btn">
-            </form>
-            
-        </div>
-    </div>
+									@*print only if date is higher than now datum, all expired hh:mm unvisible *@
+									@*if (bestellungsposition.Datum > DateTime.Now)
+									{
+										<tr>
+											<td>
+												<p @onclick="@(()=>BDetail(@kunde.Idkunde))" class="mb-0 pb-0">
+													#@kunde.Code &nbsp;
+													@hour:@minute
+												</p>
+											</td>
+										</tr>
+									}*@
+									@*print only if date is in current day month year *@
+									if (bestellungsposition.Datum.Day == DateTime.Now.Day && bestellungsposition.Datum.Month == DateTime.Now.Month && bestellungsposition.Datum.Year == DateTime.Now.Year)
+									{
+										<tr>
+											<td>
+												<p @onclick="@(()=>BDetail(@kunde.Idkunde))" class="mb-0 pb-0">
+													#@kunde.Code &nbsp;
+													@hour:@minute
+												</p>
+											</td>
+										</tr>
+									}
+									firstTime = false;
+								}
+							}
+						}
+					}
+				</tbody>
+			</table>
+		</div>
+		<div class="col-lg-3">
+			@*			<p id="text" readonly>Abholzeit</p>
+			<br />
+			<form id="button" action="Bestelluebersicht">
+			<input type="submit" value="30 Min" class="btn">
+			</form>
+			<form id="button" action="Bestelluebersicht">
+			<input type="submit" value="45 Min" class="btn">
+			</form>
+			<form id="button" action="Bestelluebersicht">
+			<input type="submit" value="1 Std" class="btn">
+			</form>*@
+
+		</div>
+	</div>
 </div>
 
 
 
 @code {
+	public int hour;
+	public int minute;
+	public int day;
+	public int month;
+	public int year;
+
+	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
+
+
+	public void Logout()
+	{
+		localStorage.Clear();
+		_navigationManager.NavigateTo("/");
+	}
+	public void BDetail(int id)
+	{
+		localStorage.SetItem<int>("KundeId", id);
+		_navigationManager.NavigateTo("/BestelluebersichtD-Chefin");
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		// get data from api
+		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+		// set hour, minute, day , month, year to now date
+		hour = DateTime.Now.Hour;
+		minute = DateTime.Now.Minute;
+		day = DateTime.Now.Day;
+		month = DateTime.Now.Month;
+		year = DateTime.Now.Year;
+
+		//sort bestellungspositions by datum
+		bestellungspositions = bestellungspositions.OrderByDescending(x => x.Datum).ToList();
+		//sort kunden by the order of bestellungspositions
+		List<Kunde> kundenSorted = new List<Kunde>();
+		foreach (var bestellungsposition in bestellungspositions)
+		{
+			foreach (var kunde in kunden)
+			{
+				if (bestellungsposition.KundeIdkunde == kunde.Idkunde && !kundenSorted.Contains(kunde))
+				{
+					kundenSorted.Add(kunde);
+				}
+			}
+		}
+		kunden = kundenSorted;
+
+	}
+
+	public class Bestellungsposition
+	{
+		public int Idbestellung { get; set; }
+
+		public int Menge { get; set; }
+
+		public DateTime Datum { get; set; }
+
+		public int KundeIdkunde { get; set; }
+
+		public int? RabattIdrabatt { get; set; }
+
+	}
+	public class Kunde
+	{
+		public int Idkunde { get; set; }
+
+		public string Code { get; set; }
+
+		public int Treuepunkte { get; set; }
+	}
+
 
 }
+

@@ -91,8 +91,8 @@
 											<td class="d-flex justify-content-center align-items-center" style="padding-top:0px;">
 												<div style="margin:20px;">
 													<div class="d-flex justify-content-center align-items-center">
-														<input type="number" style="width:80px" min="10" max="19" />
-														<input type="number" style="width:80px" min="0" max="59" />
+														<input type="number" style="width:80px" min="10" max="19" @bind-value="@hour" @onclick="@(()=>UpdateTime())" />
+														<input type="number" style="width:80px" min="0" max="59" @bind-value="@minute" @onclick="@(()=>UpdateTime())" />
 														&nbsp;
 														Uhr
 													</div>
@@ -111,7 +111,7 @@
 					<div class="col mt-auto ">
 						<div class="d-flex flex-column align-items-center  ">
 							<a href="/speisekarte" class="btn_bg w-75 btn text-center">Zurück</a>
-							<a href="#" class="btn_forward btn w-75 ">Weiter</a>
+							<a class="btn_forward btn w-75 " @onclick="@(() => SetBestllung())">Weiter</a>
 						</div>
 					</div>
 				</div>
@@ -121,9 +121,31 @@
 </div>
 
 
-
-
 @code {
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
+
+	public int hour;
+	public int minute;
+	private void UpdateTime()
+	{
+		localStorage.SetItem<int>("Hour", hour);
+		localStorage.SetItem<int>("Minute", minute);
+	}
+
+	private void SetBestllung()
+	{
+		if (menuitemIds.Count == 0)
+		{
+			return;
+		}
+		UpdateTime();
+		localStorage.SetItem<Dictionary<int, int>>("MenuItemIds", menuitemIds);
+		_navigationManager.NavigateTo("/Bestellabschluss");
+	}
+
+
+
 	public decimal summe;
 	public Dictionary<int, int> menuitemIds = new Dictionary<int, int>();
 
@@ -163,7 +185,6 @@
 	// allergien, bestellungsposition, kunde, menuitem, menuitemkategorie, menuitemueberkategorie, rabatt
 	private List<Allergie> allergien = new List<Allergie>();
 	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
-	private List<Kunde> kunden = new List<Kunde>();
 	private List<Menuitem> menuitems = new List<Menuitem>();
 	private List<Menuitemkategorie> menuitemkategories = new List<Menuitemkategorie>();
 	private List<Menuitemueberkategorie> menuitemueberkategories = new List<Menuitemueberkategorie>();
@@ -171,6 +192,17 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		if (localStorage.ContainKey("kunde"))
+			kunde = localStorage.GetItem<Kunde>("kunde");
+		else
+			_navigationManager.NavigateTo("/");
+
+		if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+			_navigationManager.NavigateTo("/");
+
+
 		// get data from localstorage
 		if (localStorage.GetItem<Dictionary<int, int>>("MenuItemIds") != null)
 		{
@@ -180,7 +212,6 @@
 		// get data from api
 		allergien = await Http.GetFromJsonAsync<List<Allergie>>("https://localhost:7076/api/allergien");
 		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
-		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
 		menuitems = await Http.GetFromJsonAsync<List<Menuitem>>("https://localhost:7076/api/Menuitems");
 		menuitemkategories = await Http.GetFromJsonAsync<List<Menuitemkategorie>>("https://localhost:7076/api/Menuitemkategories");
 		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/Menuitemueberkategories");
@@ -198,6 +229,17 @@
 					summe += item2.Preis * item.Value;
 				}
 			}
+		}
+		localStorage.SetItem<decimal>("Summe", summe);
+
+		// if hour/minute is set, set the values
+		if (localStorage.GetItem<int>("Hour") != 0)
+		{
+			hour = localStorage.GetItem<int>("Hour");
+		}
+		if (localStorage.GetItem<int>("Minute") != 0)
+		{
+			minute = localStorage.GetItem<int>("Minute");
 		}
 	}
 
@@ -219,7 +261,7 @@
 
 		public int KundeIdkunde { get; set; }
 
-		public int RabattIdrabatt { get; set; }
+		public int? RabattIdrabatt { get; set; }
 
 		public virtual Kunde KundeIdkundeNavigation { get; set; } = null!;
 

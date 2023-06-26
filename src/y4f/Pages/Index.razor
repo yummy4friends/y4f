@@ -4,6 +4,8 @@
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 @inject NavigationManager _navigationManager
+@inject IJSRuntime JSRuntime;
+
 
 <PageTitle>Yummy4Friends</PageTitle>
 
@@ -32,14 +34,25 @@
 			{
 				localStorage.SetItem("kunde", kunde);
 				_navigationManager.NavigateTo("/speisekarte");
-				break;
+
+				return;
 			}
 		}
+		JSRuntime.InvokeVoidAsync("alert", "Zugangscode ist falsch!");
 	}
 
 	protected override async Task OnInitializedAsync()
 	{
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		// if already logged in navigate to speisekarte
+		if (localStorage.ContainKey("kunde"))
+		{
+			_navigationManager.NavigateTo("/speisekarte");
+		}
+
+
+
 	}
 
 	public class Kunde
