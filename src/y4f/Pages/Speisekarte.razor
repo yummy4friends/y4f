@@ -26,18 +26,39 @@
 								<tr>
 									<td><a href="/SpeisekarteChinesich">@item2.Bezeichnung</a></td>
 								</tr>
+								@if (@item2.Bezeichnung == "Nachspeise")
+								{
+									<tr>
+										<td class="lowest"><br></td>
+									</tr>
+								}
 							}
 							else if (@item.Bezeichnung == "Japanisch")
 							{
 								<tr>
 									<td><a href="/SpeisekarteJapanisch">@item2.Bezeichnung</a></td>
 								</tr>
+								@if (@item2.Bezeichnung == "Nachspeise")
+								{
+									<tr>
+										<td class="lowest"><br></td>
+									</tr>
+								}
+
 							}
 							else if (@item.Bezeichnung == "Getränke")
 							{
 								<tr>
 									<td><a href="/SpeisekarteGetraenke">@item2.Bezeichnung</a></td>
 								</tr>
+								@if (@item2.Bezeichnung == "Bier")
+								{
+									<tr>
+										<td class="lowest"><br></td>
+									</tr><tr>
+										<td class="lowest"><br></td>
+									</tr>
+								}
 							}
 							else if (@item.Bezeichnung == "Sonstiges")
 							{
@@ -47,15 +68,9 @@
 							}
 							else
 							{
-								<tr>
-									<td><a href="/">@item2.Bezeichnung</a></td>
-								</tr>
 							}
 						}
 					}
-					<tr>
-						<td class="lowest"><br></td>
-					</tr>
 					<tr>
 						<td class="lowest"><br></td>
 
