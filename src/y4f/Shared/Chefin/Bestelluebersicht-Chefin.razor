@@ -4,14 +4,19 @@
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 @inject NavigationManager _navigationManager
+
+@*// logout button*@
+<div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+	<button type="button" class="btn" @onclick="@Logout">Logout</button>
+</div>
 <div class="container d-flex flex-column">
 	<div class="row">
-		<div class="col-lg-8">
+		<div class="col-12">
 			<br /><br />
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th colspan="2">Aktive Bestellungen  @day.@month.@year</th>
+						<th>Aktive Bestellungen  @day.@month.@year</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -59,7 +64,7 @@
 				</tbody>
 			</table>
 		</div>
-		@*<div class="col-lg-3">
+		<div class="col-lg-3">
 		<p id="text" readonly>Abholzeit</p>
 		<br />
 		<form id="button" action="Bestelluebersicht">
@@ -72,7 +77,7 @@
 		<input type="submit" value="1 Std" class="btn">
 		</form>
 
-		</div>*@
+		</div>
 	</div>
 </div>
 
@@ -90,6 +95,11 @@
 	private Kunde kunde = new Kunde();
 
 
+	public void Logout()
+	{
+		localStorage.Clear();
+		_navigationManager.NavigateTo("/");
+	}
 	public void BDetail(int id)
 	{
 		localStorage.SetItem<int>("KundeId", id);

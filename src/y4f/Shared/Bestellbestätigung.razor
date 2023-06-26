@@ -96,7 +96,6 @@
 		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/Menuitemueberkategories");
 		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
 
-		// test use the first kunde
 		// get kunde from local storage
 		kunde = localStorage.GetItem<Kunde>("kunde");
 

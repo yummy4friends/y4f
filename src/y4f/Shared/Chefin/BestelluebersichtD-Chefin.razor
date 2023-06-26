@@ -5,8 +5,15 @@
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
 @inject NavigationManager _navigationManager
 
+
+@*// logout button*@
+<div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+	<button type="button" class="btn" @onclick="@Logout">Logout</button>
+</div>
 <div class="container">
+
 	<div class="row">
+
 		<div class="col-sm-12 col-lg-6">
 			@*Tabelle Ihre Bestellung*@
 			<div class="tbl-container">
@@ -69,7 +76,7 @@
 			<div class="d-flex flex-column align-items-center  ">
 				<div class="tbl-container  w-100">
 					<!-- <== overflow: hidden applied to parent -->
-					<table class="table table-bordered bdr " style=" border-radius: 50px; margin-left: 50px;">
+					<table class="table table-bordered bdr " style=" border-radius: 50px; ">
 						<thead class="bg_green">
 							<tr>
 								<td class="d-flex justify-content-center align-items-center" style="border-bottom:0px;">
@@ -113,6 +120,7 @@
         </div>
     </div>
 </div>*@
+
 @code {
 
 	public int hour;
@@ -137,6 +145,11 @@
 	private List<Rabatt> rabatte = new List<Rabatt>();
 	private List<BestellungspositionHasMenuitem> bestellungspositionHasMenuitems = new List<BestellungspositionHasMenuitem>();
 
+	public void Logout()
+	{
+		localStorage.Clear();
+		_navigationManager.NavigateTo("/");
+	}
 	protected override async Task OnInitializedAsync()
 	{
 		// get data from api
