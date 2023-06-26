@@ -6,6 +6,7 @@
 @inject NavigationManager _navigationManager
 @inject IJSRuntime JSRuntime;
 
+
 <PageTitle>Yummy4Friends</PageTitle>
 
 <body style='--blazor-load-percentage: 100%; --blazor-load-percentage-text: "100%"; background-color:#C7FFD5;'>
@@ -33,6 +34,7 @@
 			{
 				localStorage.SetItem("kunde", kunde);
 				_navigationManager.NavigateTo("/speisekarte");
+
 				return;
 			}
 		}
@@ -42,11 +44,13 @@
 	protected override async Task OnInitializedAsync()
 	{
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
 		// if already logged in navigate to speisekarte
 		if (localStorage.ContainKey("kunde"))
 		{
 			_navigationManager.NavigateTo("/speisekarte");
 		}
+
 
 
 	}
@@ -60,6 +64,3 @@
 
 
 }
-
-
-

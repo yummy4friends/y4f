@@ -93,11 +93,6 @@
 	</div>
 </div>
 
-
-
-
-
-
 @code {
 	private List<Kunde> kunden = new List<Kunde>();
 	private Kunde kunde = new Kunde();
@@ -142,9 +137,9 @@
 		{
 			menuitemIds = localStorage.GetItem<Dictionary<int, int>>("MenuItemIds");
 		}
+
 		allergien = await Http.GetFromJsonAsync<List<Allergie>>("https://localhost:7076/api/allergien");
 		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
-		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
 		menuitems = await Http.GetFromJsonAsync<List<Menuitem>>("https://localhost:7076/api/Menuitems");
 		menuitemkategories = await Http.GetFromJsonAsync<List<Menuitemkategorie>>("https://localhost:7076/api/Menuitemkategories");
 		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/Menuitemueberkategories");
