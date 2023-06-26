@@ -42,9 +42,20 @@
 									month = bestellungsposition.Datum.Month;
 									year = bestellungsposition.Datum.Year;
 
-									@*print kunde.code, hour and minute from last bestellungsposition*@
-									@*print only if date is higher than now datum *@
-									if (bestellungsposition.Datum > DateTime.Now)
+									@*print only if date is higher than now datum, all expired hh:mm unvisible *@
+									@*if (bestellungsposition.Datum > DateTime.Now)
+									{
+										<tr>
+											<td>
+												<p @onclick="@(()=>BDetail(@kunde.Idkunde))" class="mb-0 pb-0">
+													#@kunde.Code &nbsp;
+													@hour:@minute
+												</p>
+											</td>
+										</tr>
+									}*@
+									@*print only if date is in current day month year *@
+									if (bestellungsposition.Datum.Day == DateTime.Now.Day && bestellungsposition.Datum.Month == DateTime.Now.Month && bestellungsposition.Datum.Year == DateTime.Now.Year)
 									{
 										<tr>
 											<td>
@@ -55,7 +66,6 @@
 											</td>
 										</tr>
 									}
-									@*}*@
 									firstTime = false;
 								}
 							}
