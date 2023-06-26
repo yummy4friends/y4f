@@ -94,8 +94,6 @@
 	private List<Menuitemkategorie> menuitemkategories = new List<Menuitemkategorie>();
 	private List<Menuitemueberkategorie> menuitemueberkategories = new List<Menuitemueberkategorie>();
 
-	private Kunde curretKunde = new Kunde();
-
 	protected override async Task OnInitializedAsync()
 	{
 		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
@@ -110,7 +108,6 @@
 
 		menuitemkategories = await Http.GetFromJsonAsync<List<Menuitemkategorie>>("https://localhost:7076/api/MenuItemKategories");
 		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/MenuItemUeberkategories");
-
 	}
 
 	public class Menuitemkategorie
