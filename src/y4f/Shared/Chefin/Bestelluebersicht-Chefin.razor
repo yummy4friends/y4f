@@ -65,17 +65,17 @@
 			</table>
 		</div>
 		<div class="col-lg-3">
-		<p id="text" readonly>Abholzeit</p>
-		<br />
-		<form id="button" action="Bestelluebersicht">
-		<input type="submit" value="30 Min" class="btn">
-		</form>
-		<form id="button" action="Bestelluebersicht">
-		<input type="submit" value="45 Min" class="btn">
-		</form>
-		<form id="button" action="Bestelluebersicht">
-		<input type="submit" value="1 Std" class="btn">
-		</form>
+			@*			<p id="text" readonly>Abholzeit</p>
+			<br />
+			<form id="button" action="Bestelluebersicht">
+			<input type="submit" value="30 Min" class="btn">
+			</form>
+			<form id="button" action="Bestelluebersicht">
+			<input type="submit" value="45 Min" class="btn">
+			</form>
+			<form id="button" action="Bestelluebersicht">
+			<input type="submit" value="1 Std" class="btn">
+			</form>*@
 
 		</div>
 	</div>
@@ -117,6 +117,22 @@
 		day = DateTime.Now.Day;
 		month = DateTime.Now.Month;
 		year = DateTime.Now.Year;
+
+		//sort bestellungspositions by datum
+		bestellungspositions = bestellungspositions.OrderByDescending(x => x.Datum).ToList();
+		//sort kunden by the order of bestellungspositions
+		List<Kunde> kundenSorted = new List<Kunde>();
+		foreach (var bestellungsposition in bestellungspositions)
+		{
+			foreach (var kunde in kunden)
+			{
+				if (bestellungsposition.KundeIdkunde == kunde.Idkunde && !kundenSorted.Contains(kunde))
+				{
+					kundenSorted.Add(kunde);
+				}
+			}
+		}
+		kunden = kundenSorted;
 
 	}
 

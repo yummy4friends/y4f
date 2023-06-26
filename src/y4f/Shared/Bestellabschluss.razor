@@ -89,12 +89,13 @@
 		{
 			localStorage.SetItem("RabattEinloesen", false);
 			localStorage.SetItem("Summe", summe);
-			// if summe > 8€ add treuepunkte
 			if (summe >= 8)
 			{
-				kunde.Treuepunkte++;
-				// add treuepunkte to API
-				Http.PutAsJsonAsync("https://localhost:7076/api/kunden/" + kunde.Idkunde, kunde);
+				if (kunde.Treuepunkte < 10)
+				{
+					kunde.Treuepunkte++;
+					Http.PutAsJsonAsync("https://localhost:7076/api/kunden/" + kunde.Idkunde, kunde);
+				}
 			}
 		}
 
@@ -138,12 +139,20 @@
 
 			Http.PostAsJsonAsync("https://localhost:7076/api/bestellungspositionen", bestellungsposition);
 
-			//Add menuitems to bestellungspositionHasMenuItem
-			BestellungspositionHasMenuitem bestellungspositionHasMenuItem = new BestellungspositionHasMenuitem();
-			bestellungspositionHasMenuItem.Bestellungsposition_IDBestellung = bestellungsposition.Idbestellung;
-			bestellungspositionHasMenuItem.MenuItem_IDMenuItem = item.Key;
+			////Add menuitems to bestellungspositionHasMenuItem
+			//BestellungspositionHasMenuitem bestellungspositionHasMenuItem = new BestellungspositionHasMenuitem();
+			//bestellungspositionHasMenuItem.Bestellungsposition_IDBestellung = bestellungsposition.Idbestellung;
+			//bestellungspositionHasMenuItem.MenuItem_IDMenuItem = item.Key;
 
-			Http.PostAsJsonAsync("https://localhost:7076/api/bestellungspositionhasmenuitems", bestellungspositionHasMenuItem);
+			//Http.PostAsJsonAsync("https://localhost:7076/api/bestellungspositionhasmenuitems", bestellungspositionHasMenuItem);
+
+			var newBestellungsposition = new BestellungspositionHasMenuitem()
+				{
+					Bestellungsposition_IDBestellung = bestellungsposition.Idbestellung,
+					MenuItem_IDMenuItem = item.Key
+				};
+
+			Http.PostAsJsonAsync("https://localhost:7076/api/bestellungspositionhasmenuitems", newBestellungsposition);
 		}
 
 

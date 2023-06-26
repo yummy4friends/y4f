@@ -221,8 +221,8 @@ public partial class WebApiContext : DbContext
 
 			entity.ToTable("bestellungsposition_has_menuitem");
 
-			entity.Property(e => e.Bestellungsposition_IDBestellung).HasColumnType("int(11)").HasColumnName("bestellungsposition_IDBestellung");
-			entity.Property(e => e.MenuItem_IDMenuItem).HasColumnType("int(11)").HasColumnName("menuItem_IDMenuItem");
+			entity.Property(e => e.Bestellungsposition_IDBestellung).HasColumnType("int(11)").HasColumnName("Bestellungsposition_IDBestellung");
+			entity.Property(e => e.MenuItem_IDMenuItem).HasColumnType("int(11)").HasColumnName("MenuItem_IDMenuItem");
 		});
 
 		modelBuilder.Entity<MenuitemHasAllergie>(entity =>

@@ -99,7 +99,7 @@
 
 					<div class="d-flex flex-column" style="align-items: center;  margin-left: 100px;">
 						@*<button class="btn_back w-75">Zurück</button>*@
-						@*<button class="btn btn-danger w-75" style="border-radius: 50px; padding-top:12px; padding-bottom:12px; color:black;">Bestellung auflösen</button>*@
+						@*<button class="btn btn-danger w-75" style="border-radius: 50px; padding-top:12px; padding-bottom:12px; color:black;" @onclick="Aufloesen">Bestellung auflösen</button>*@
 						@*<button class="btn_forward w-75">Bestellung abschließen</button>*@
 					</div>
 
@@ -150,6 +150,25 @@
 		localStorage.Clear();
 		_navigationManager.NavigateTo("/");
 	}
+
+	//public void Aufloesen()
+	//{
+	//	foreach (var bestellungsposition in bestellungspositions)
+	//	{
+	//		foreach (var bestellungspositionHasMenuitem in bestellungspositionHasMenuitems)
+	//		{
+	//			if (bestellungsposition.Idbestellung == bestellungspositionHasMenuitem.Bestellungsposition_IDBestellung)
+	//			{
+	//				Http.DeleteAsync("https://localhost:7076/api/BestellungspositionHasMenuitems/" + bestellungspositionHasMenuitem.Bestellungsposition_IDBestellung + "/" + bestellungspositionHasMenuitem.MenuItem_IDMenuItem);
+	//			}
+	//		}
+	//		if (bestellungsposition.KundeIdkunde == kunde.Idkunde)
+	//		{
+	//			Http.DeleteAsync("https://localhost:7076/api/Bestellungspositionen/" + bestellungsposition.Idbestellung);
+	//		}
+	//	}
+	//}
+
 	protected override async Task OnInitializedAsync()
 	{
 		// get data from api
