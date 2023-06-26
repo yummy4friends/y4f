@@ -1,36 +1,78 @@
 @page "/RegistrierungA"
+@using System.Text;
+@using System.Security.Cryptography;
 @layout Registrierung
-@inject NavigationManager NavManager
+@inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
+@inject IJSRuntime JSRuntime;
+
 
 <div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
-    <p>Benutzername:</p>
+	<p>Benutzername:</p>
 
-    <input type="text" class="form-control" id="name" name="name" @bind="@inputName">
+	<input type="text" class="form-control" id="name" name="name" @bind="@inputName">
 
-    <p>Passwort:</p>
-    <input type="password" class="form-control" id="password" name="password" @bind="@inputPassword">
-    
-    <button type="button" class="btn" @onclick="@Login">Login</button>
+	<p>Passwort:</p>
+	<input type="password" class="form-control" id="password" name="password" @bind="@inputPassword">
+
+	<button type="button" class="btn" @onclick="@Login">Login</button>
 
 </div>
 
 @code {
-    public string inputName { get; set; } = string.Empty;
-    public string inputPassword { get; set; } = string.Empty;
+	public string inputName { get; set; }
+	public string inputPassword { get; set; }
+	public string inputPasswordEnc { get; set; }
 
-    public static string userName { get; set; } = string.Empty;
+	private List<Admin> admins = new List<Admin>();
+	private Admin admin = new Admin();
 
-    public void Login() {
-        if (inputName == userDataName && inputPassword == userDataPassword) {
-            localStorage.SetItem("name", inputName);
-            userName = localStorage.GetItem<string>("name");
-            NavManager.NavigateTo("/Bestelluebersicht");
-        }
-    }
-}
+	public void Login()
+	{
+		// if inputName and inputPassword is not null
+		if (string.IsNullOrEmpty(inputName) || string.IsNullOrEmpty(inputPassword))
+		{
+			JSRuntime.InvokeVoidAsync("alert", "Benutzernamen oder Passwort ist falsch!");
+			return;
+		}
+		else
+		{
+			//encode inputpassword
+			inputPasswordEnc = Convert.ToHexString(SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(inputPassword)));
 
-@code {
-    public string userDataName { get; set; } = "";
-    public string userDataPassword { get; set; } = "";
+			// if inputName is  in admins with the encrypt SHA512 password
+			if (admins.Any(a => a.Username == inputName && a.Password == inputPasswordEnc))
+			{
+				localStorage.SetItem("admin", admins.First(a => a.Username == inputName && a.Password == inputPasswordEnc));
+
+				_navigationManager.NavigateTo("/Bestelluebersicht");
+			}
+		}
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		admins = await Http.GetFromJsonAsync<List<Admin>>("https://localhost:7076/api/admins");
+
+		// if already logged in navigate to Bestelluebersicht
+		// if localsorage admin object is valid from the api
+		if (localStorage.ContainKey("admin"))
+		{
+			admin = localStorage.GetItem<Admin>("admin");
+
+			if (admin != null && !admins.Any(a => a.Username == admin.Username && a.Password == admin.Password))
+				_navigationManager.NavigateTo("/RegistrierungA");
+			else
+				_navigationManager.NavigateTo("/Bestelluebersicht");
+		}
+	}
+
+
+	public partial class Admin
+	{
+		public int Id { get; set; }
+		public string Username { get; set; }
+		public string Password { get; set; }
+	}
 }

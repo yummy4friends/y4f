@@ -1,5 +1,33 @@
 @page "/cookies"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
 
+
+@code {
+    private List<Kunde> kunden = new List<Kunde>();
+    private Kunde kunde = new Kunde();
+
+    protected override async Task OnInitializedAsync()
+    {
+        kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+        if (localStorage.ContainKey("kunde"))
+            kunde = localStorage.GetItem<Kunde>("kunde");
+        else
+            _navigationManager.NavigateTo("/");
+
+        if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+            _navigationManager.NavigateTo("/");
+    }
+
+    public class Kunde
+    {
+        public int Idkunde { get; set; }
+        public string Code { get; set; }
+        public int Treuepunkte { get; set; }
+    }
+}
 <!DOCTYPE html>
 <html lang="">
     <head>

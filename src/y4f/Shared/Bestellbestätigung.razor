@@ -1,38 +1,241 @@
 ﻿@page "/Bestellbestätigung"
 
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
+
 <body>
-    <div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
-        <h5>Vielen Dank für Ihre Bestellung</h5><br>
-        <p class="text">
-            Ihr Essen ist in <b>30 Minuten</b> abholbereit.
-            Sie erhalten eine Benachrichtigung sobald das Essen fertig ist. Wir würden uns freuen, wenn Sie uns ein <a href="Feedback">Feedback</a> geben.
-            <br><br><br><br>
-        </p>
+	<div class="container col-lg-5 col-md-9 col-sm-12 d-flex flex-column " id="content">
+		<h5>Vielen Dank für Ihre Bestellung</h5><br>
+		<p class="text">
+			<strong>Ihr Essen ist heute um @hour:@minute abholbereit.</strong>
+			Sie erhalten eine Benachrichtigung sobald das Essen fertig ist. Wir würden uns freuen, wenn Sie uns ein <a href="Feedback">Feedback</a> geben.
+			<br><br><br><br>
+		</p>
 
-        <div class="progress">
-            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" style="width:50%"></div>
-        </div>
+		<div class="progress">
+			<div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" style="width:10%"></div>
+		</div>
 
-        <table>
+		<table>
 
-            <tr class="loadtext">
-                <td>Bestellung eingegangen</td>
-                <td class="load2">Bestellung wird zubereitet</td>
-                <td class="load3">Essen abholbereit</td>
-            </tr>
-        </table>
-        
-        <div class="button">
-            <br><br><br><br>
-            <form id="button1" action="/">
-                <input type="submit" value="Zur Startseite" class="btn">
-            </form>
-        </div>
+			<tr class="loadtext">
+				<td>Bestellung eingegangen</td>
+				<td class="load2">Bestellung wird zubereitet</td>
+				<td class="load3">Essen abholbereit</td>
+			</tr>
+		</table>
 
-    </div>
+		<div class="button">
+			<br><br><br><br>
+			<form id="button1" action="/">
+				<input type="submit" value="Bestellungsübersicht" class="btn" @onclick="BestellungsUuebersicht"/>
+			</form>
+		</div>
+
+	</div>
 
 </body>
-@code {
 
-    
+
+
+
+
+
+
+
+@code {
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
+
+	private List<Rabatt> rabatte = new List<Rabatt>();
+	private Rabatt rabatt = new Rabatt();
+	private bool rabattEinloesen;
+
+	public Dictionary<int, int> menuitemIds = new Dictionary<int, int>();
+
+	public int hour;
+	public int minute;
+
+	public decimal summe;
+
+
+
+	public void BestellungsUuebersicht()
+	{
+		_navigationManager.NavigateTo("/Kontoverwaltung");
+	}
+
+	// allergien, bestellungsposition, kunde, menuitem, menuitemkategorie, menuitemueberkategorie, rabatt
+	private List<Allergie> allergien = new List<Allergie>();
+	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
+	private List<Menuitem> menuitems = new List<Menuitem>();
+	private List<Menuitemkategorie> menuitemkategories = new List<Menuitemkategorie>();
+	private List<Menuitemueberkategorie> menuitemueberkategories = new List<Menuitemueberkategorie>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		// kunde login start
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		if (localStorage.ContainKey("kunde"))
+			kunde = localStorage.GetItem<Kunde>("kunde");
+		else
+			_navigationManager.NavigateTo("/");
+
+		if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+			_navigationManager.NavigateTo("/");
+		// kunde login end
+
+		// get data from api
+		allergien = await Http.GetFromJsonAsync<List<Allergie>>("https://localhost:7076/api/allergien");
+		bestellungspositions = await Http.GetFromJsonAsync<List<Bestellungsposition>>("https://localhost:7076/api/bestellungspositionen");
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+		menuitems = await Http.GetFromJsonAsync<List<Menuitem>>("https://localhost:7076/api/Menuitems");
+		menuitemkategories = await Http.GetFromJsonAsync<List<Menuitemkategorie>>("https://localhost:7076/api/Menuitemkategories");
+		menuitemueberkategories = await Http.GetFromJsonAsync<List<Menuitemueberkategorie>>("https://localhost:7076/api/Menuitemueberkategories");
+		rabatte = await Http.GetFromJsonAsync<List<Rabatt>>("https://localhost:7076/api/Rabatte");
+
+		// get kunde from local storage
+		kunde = localStorage.GetItem<Kunde>("kunde");
+
+		// get the most recent rabatt, that are still valid (GueltigkeitBis)
+		// if there is no rabatt, set the rabatt to null
+		if (rabatte.Count == 0)
+		{
+			rabatt = null;
+		}
+		else
+		{
+			for (int i = 0; i < rabatte.Count; i++)
+			{
+				if (rabatte[i].GueltigkeitBis > DateTime.Now)
+				{
+					rabatt = rabatte[i];
+				}
+			}
+		}
+
+		// get data from localstorage
+		if (localStorage.GetItem<Dictionary<int, int>>("MenuItemIds") != null)
+		{
+			menuitemIds = localStorage.GetItem<Dictionary<int, int>>("MenuItemIds");
+		}
+
+		// calculate the sum of all menuitems
+		summe = 0;
+		foreach (var item in menuitemIds)
+		{
+			foreach (var item2 in menuitems)
+			{
+				if (item.Key == item2.IdmenuItem)
+				{
+					summe += item2.Preis * item.Value;
+				}
+			}
+		}
+
+		// if hour/minute is set, set the values
+		if (localStorage.GetItem<int>("Hour") != 0)
+		{
+			hour = localStorage.GetItem<int>("Hour");
+		}
+		if (localStorage.GetItem<int>("Minute") != 0)
+		{
+			minute = localStorage.GetItem<int>("Minute");
+		}
+
+		//
+	}
+
+	public class Allergie
+	{
+		public int Idallergie { get; set; }
+
+		public string? Beschreibung { get; set; }
+
+		public virtual ICollection<Menuitem> MenuItemIdmenuItems { get; set; } = new List<Menuitem>();
+	}
+	public class Bestellungsposition
+	{
+		public int Idbestellung { get; set; }
+
+		public int? Menge { get; set; }
+
+		public DateTime? Datum { get; set; }
+
+		public int KundeIdkunde { get; set; }
+
+		public int? RabattIdrabatt { get; set; }
+
+		public virtual Kunde KundeIdkundeNavigation { get; set; } = null!;
+
+		public virtual Rabatt RabattIdrabattNavigation { get; set; } = null!;
+
+		public virtual ICollection<Menuitem> MenuItemIdmenuItems { get; set; } = new List<Menuitem>();
+	}
+	public class Kunde
+	{
+		public int Idkunde { get; set; }
+
+		public string? Code { get; set; }
+
+		public int? Treuepunkte { get; set; }
+
+		public virtual ICollection<Bestellungsposition> Bestellungspositions { get; set; } = new List<Bestellungsposition>();
+	}
+
+	public class Menuitem
+	{
+		public int IdmenuItem { get; set; }
+
+		public string? Bezeichnung { get; set; }
+
+		public string? Zusatzinformation { get; set; }
+
+		public decimal Preis { get; set; }
+
+		public int MenuItemKategorieIdmenuItemKategorie { get; set; }
+
+		public virtual Menuitemkategorie MenuItemKategorieIdmenuItemKategorieNavigation { get; set; } = null!;
+
+		public virtual ICollection<Allergie> AllergieIdallergies { get; set; } = new List<Allergie>();
+
+		public virtual ICollection<Bestellungsposition> BestellungspositionIdbestellungs { get; set; } = new List<Bestellungsposition>();
+	}
+	public class Menuitemkategorie
+	{
+		public int IdmenuItemKategorie { get; set; }
+
+		public string? Bezeichnung { get; set; }
+
+		public int MenuItemUeberkategorieIdmenuItemUeberkategorie { get; set; }
+
+		public virtual Menuitemueberkategorie MenuItemUeberkategorieIdmenuItemUeberkategorieNavigation { get; set; } = null!;
+
+		public virtual ICollection<Menuitem> Menuitems { get; set; } = new List<Menuitem>();
+	}
+
+	public class Menuitemueberkategorie
+	{
+		public int IdmenuItemUeberkategorie { get; set; }
+
+		public string? Bezeichnung { get; set; }
+
+		public virtual ICollection<Menuitemkategorie> Menuitemkategories { get; set; } = new List<Menuitemkategorie>();
+	}
+
+	public class Rabatt
+	{
+		public int Idrabatt { get; set; }
+
+		public decimal? Prozent { get; set; }
+
+		public DateTime? GueltigkeitVon { get; set; }
+
+		public DateTime? GueltigkeitBis { get; set; }
+
+		public bool Einloesen { get; set; }
+		public virtual ICollection<Bestellungsposition> Bestellungspositions { get; set; } = new List<Bestellungsposition>();
+	}
 }

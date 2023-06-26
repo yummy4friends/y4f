@@ -2,6 +2,7 @@
 
 @inject HttpClient Http
 @inject Blazored.LocalStorage.ISyncLocalStorageService localStorage
+@inject NavigationManager _navigationManager
 
 <h1>Speisekarte Getränke</h1>
 @* create an container bootstrap 5*@
@@ -93,6 +94,8 @@
 
 
 @code {
+	private List<Kunde> kunden = new List<Kunde>();
+	private Kunde kunde = new Kunde();
 
 	public Dictionary<int, int> menuitemIds = new Dictionary<int, int>();
 
@@ -114,7 +117,6 @@
 
 	private List<Allergie> allergien = new List<Allergie>();
 	private List<Bestellungsposition> bestellungspositions = new List<Bestellungsposition>();
-	private List<Kunde> kunden = new List<Kunde>();
 	private List<Menuitem> menuitems = new List<Menuitem>();
 	private List<Menuitemkategorie> menuitemkategories = new List<Menuitemkategorie>();
 	private List<Menuitemueberkategorie> menuitemueberkategories = new List<Menuitemueberkategorie>();
@@ -122,6 +124,18 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		// kunde login start
+		kunden = await Http.GetFromJsonAsync<List<Kunde>>("https://localhost:7076/api/kunden");
+
+		if (localStorage.ContainKey("kunde"))
+			kunde = localStorage.GetItem<Kunde>("kunde");
+		else
+			_navigationManager.NavigateTo("/");
+
+		if (kunde != null && !kunden.Any(k => k.Code == kunde.Code))
+			_navigationManager.NavigateTo("/");
+		// kunde login end
+
 		if (localStorage.GetItem<Dictionary<int, int>>("MenuItemIds") != null)
 		{
 			menuitemIds = localStorage.GetItem<Dictionary<int, int>>("MenuItemIds");
@@ -154,7 +168,7 @@
 
 		public int KundeIdkunde { get; set; }
 
-		public int RabattIdrabatt { get; set; }
+		public int? RabattIdrabatt { get; set; }
 
 		public virtual Kunde KundeIdkundeNavigation { get; set; } = null!;
 
